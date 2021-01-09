@@ -1,0 +1,11 @@
+@import "src/styles/variables";
+
+.nav {
+  background-color: $dark_black;
+  grid-area: nav;
+
+  .inner {
+    margin-top: 6.8rem;
+  }
+}
+

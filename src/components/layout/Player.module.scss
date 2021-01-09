@@ -1,0 +1,7 @@
+@import "src/styles/variables";
+
+.player {
+  background-color: $dark_gray;
+  grid-area: player;
+  min-height: 10rem;
+}
