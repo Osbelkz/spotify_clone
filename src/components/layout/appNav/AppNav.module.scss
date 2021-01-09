@@ -1,0 +1,35 @@
+@import "src/styles/variables";
+
+.appNav {
+  .link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 2.4rem;
+    height: 3.2rem;
+    color: $light_l;
+    font-family: Rubik;
+    font-size: 1.8rem;
+    &:hover {
+      color: $light_xl;
+    }
+    > img {
+      margin-right: 0.8rem;
+    }
+
+  }
+}
+
+
+.active {
+  color: $light_xl;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: $green;
+  }
+}
