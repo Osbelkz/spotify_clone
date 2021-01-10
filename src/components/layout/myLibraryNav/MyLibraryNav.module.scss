@@ -1,15 +1,11 @@
 @import "src/styles/variables";
+@import "src/styles/mixins";
 
 .myLibraryNav {
   margin-top: 1.4rem;
   padding: 0 2.4rem;
   .title {
-    color: $light_l;
-
-    font-size: 1.1rem;
-    letter-spacing: .18em;
-    line-height: 1.4rem;
-    text-transform: uppercase;
+    @include h5();
   }
   .nav {
     margin-top: 0.6rem;
@@ -19,6 +15,22 @@
       padding: 0.6rem 0;
       font-size: 1.5rem;
       line-height: 1.9rem;
+      position: relative;
+      &:hover {
+        color: $light_xl;
+      }
+    }
+    .active {
+      color: $light_xl;
+      &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -24px;
+        bottom: 0;
+        width: 4px;
+        background-color: $green;
+      }
     }
   }
 }

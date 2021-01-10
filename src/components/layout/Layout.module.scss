@@ -7,12 +7,12 @@
   grid-template-areas: "nav header"
                         "nav main"
                         "player player";
-  grid-template-rows: 9rem 1fr 10rem;
+  grid-template-rows: 4.6rem 1fr 10rem;
   grid-template-columns: 20rem 1fr;
 }
 
 .main {
   overflow: scroll;
   grid-area: main;
-  background-color: #fff;
+  background-color: $dark_black;
 }

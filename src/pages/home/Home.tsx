@@ -1,15 +1,15 @@
 import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import { getMyInfo, HomeStateType } from '../../store/home-reducer';
-import {AppRootStateType} from "../../store/store";
+import {useDispatch} from "react-redux";
+import { getMyInfo } from '../../store/home-reducer';
 import Layout from "../../components/layout/Layout";
+import {Route, Switch } from 'react-router-dom';
+import RecentlyPlayed from "./yourLibrary/recentlyPlayed/RecentlyPlayed";
+import LikedTracks from "./yourLibrary/LikedTracks/LikedTracks";
 
 const Home:React.FC = ({}) => {
 
     const dispatch = useDispatch()
-    const {displayName, MyRecentlyPlayedTracks} = useSelector<AppRootStateType, HomeStateType>(state => state.home)
 
-    console.log(MyRecentlyPlayedTracks)
 
     useEffect(() => {
         dispatch(getMyInfo())
@@ -19,17 +19,10 @@ const Home:React.FC = ({}) => {
 
     return (
         <Layout>
-
-
-            {displayName}
-            <div>
-                {MyRecentlyPlayedTracks.map((track: any) => {
-                    return <div>
-                        <img src={track.track.album.images[1].url} alt=""/>
-                        {track.track.name}
-                    </div>
-                })}
-            </div>
+            <Switch>
+                <Route path={"/recently-played"} component={RecentlyPlayed} />
+                <Route path={"/liked-songs"} component={LikedTracks} />
+            </Switch>
         </Layout>
     );
 };
