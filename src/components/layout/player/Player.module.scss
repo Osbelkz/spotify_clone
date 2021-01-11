@@ -1,0 +1,33 @@
+@import "../../../styles/variables";
+
+.player {
+  background-color: $dark_gray;
+  grid-area: player;
+  height: 8.8rem;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1.2rem;
+
+  .playerControls {
+    width: 50%;
+    overflow: hidden;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    .controlButtons {
+
+    }
+    .trackProgress {
+
+    }
+  }
+  .extendedControls {
+
+  }
+}
+
+.button {
+  padding: 2rem;
+  margin: 0.5rem;
+}

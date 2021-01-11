@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from "./Layout.module.scss";
 import Header from "./Header";
-import Player from "./Player";
+import Player from "./player/Player";
 import Nav from './Nav';
 
 const Layout: React.FC = ({children}) => {

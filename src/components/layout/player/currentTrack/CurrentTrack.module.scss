@@ -1,0 +1,27 @@
+@import "src/styles/variables";
+
+.currentTrack {
+  display: flex;
+  .trackImage {
+    width: 5.6rem;
+    height: 5.6rem;
+  }
+  .trackInfo {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    margin-left: 1.4rem;
+    .trackName {
+      font-size: 1.5rem;
+      line-height: 1.82rem;
+      color: $light_xl;
+    }
+    .trackArtists {
+      margin-top: 0.6rem;
+
+      color: $light_gray;
+      font-size: 1.3rem;
+      line-height: 1.58rem;
+    }
+  }
+}

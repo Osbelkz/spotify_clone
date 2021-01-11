@@ -12,6 +12,7 @@ export type HomeStateType = typeof initialState
 export const getMyInfo = createAsyncThunk
 ("getMyInfo", async (arg, thunkAPI) => {
     let result = await spotifyWebApi.getMe()
+    console.log(result)
     return result.display_name
 })
 

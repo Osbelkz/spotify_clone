@@ -3,16 +3,11 @@ import { spotifyWebApi } from "../api/spotify-web-api";
 
 const initialState = {
     isLoggedIn: false,
-    token: {
-        access_token: "",
-        expires_in: "",
-        token_type: ""
-    } as tokenDataType
 }
 
-export const setAccessToken = createAsyncThunk<tokenDataType, tokenDataType>("setAccessToken", (tokenData, thunkAPI) => {
+export const setAccessToken = createAsyncThunk<unknown, tokenDataType>("setAccessToken", (tokenData, thunkAPI) => {
     spotifyWebApi.setAccessToken(tokenData.access_token)
-    return tokenData
+
 })
 
 export const appSlice = createSlice({
@@ -22,7 +17,6 @@ export const appSlice = createSlice({
     extraReducers: builder => (
         builder
             .addCase(setAccessToken.fulfilled, (state, action) => {
-                state.token = action.payload
                 state.isLoggedIn = true
             })
     )
