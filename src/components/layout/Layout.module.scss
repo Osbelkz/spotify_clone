@@ -12,7 +12,7 @@
 }
 
 .main {
-  overflow: scroll;
+  overflow-y: scroll;
   grid-area: main;
   background-color: $dark_black;
 }

@@ -1,22 +1,26 @@
-import React, {useEffect, useRef } from 'react';
-import { useState } from 'react';
+import React, {useEffect, useRef} from 'react';
+import {useState} from 'react';
 import classes from "./Player.module.scss";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../../store/store";
 import CurrentTrack from './currentTrack/CurrentTrack';
-
+import playBtnSvg from "../../../assets/UI/player/Play.svg"
+import pauseBtnSvg from "../../../assets/UI/player/pause_icon.svg"
+import prevBtnSvg from "../../../assets/UI/player/prev.svg"
+import nextBtnSvg from "../../../assets/UI/player/next_icon.png"
 
 const Player: React.FC = () => {
 
 
     const currentTrack = useSelector<AppRootStateType, SpotifyApi.TrackObjectFull | undefined>(state => state.player.currentTrack)
 
-    if (currentTrack) {}
+    if (currentTrack) {
+    }
     console.log(currentTrack)
     const audioRef = useRef<HTMLAudioElement>(null);
 
     const [duration, setDuration] = useState(0);
-    const [currentTime, setCurrentTime] = useState();
+    const [currentTime, setCurrentTime] = useState(0);
 
     useEffect(() => {
         if (audioRef.current) {
@@ -38,38 +42,21 @@ const Player: React.FC = () => {
         }, 1000);
     }, []);
 
-    // videoRef.current!.height
-
     const play = () => audioRef && audioRef.current && audioRef.current.play();
     const pause = () => audioRef && audioRef.current && audioRef.current.pause();
-    const volumeUp = () => {
-        if (audioRef && audioRef.current && audioRef.current.volume < 0.9) audioRef.current.volume += 0.1;
-        else audioRef && audioRef.current && (audioRef.current.volume = 1);
-    };
-    const volumeDown = () => {
-        if (audioRef && audioRef.current && audioRef.current.volume > 0.1) audioRef.current.volume -= 0.1;
-        else audioRef && audioRef.current && (audioRef.current.volume = 0);
-    };
-    const currentTimeUp = () => {
-        if (audioRef && audioRef.current
-            && audioRef.current.currentTime < audioRef.current.duration - 0.3) audioRef.current.currentTime += 0.3;
-        else audioRef && audioRef.current && (audioRef.current.currentTime = audioRef.current.duration);
-    };
-    const currentTimeDown = () => {
-        if (audioRef && audioRef.current
-            && audioRef.current.currentTime > 0.3) audioRef.current.currentTime -= 0.3;
-        else audioRef && audioRef.current && (audioRef.current.currentTime = 0);
-    };
-    const stop = () => {
-        audioRef && audioRef.current && audioRef.current.pause();
-        audioRef && audioRef.current && (audioRef.current.currentTime = 0);
-    };
+
+    const convertToMMSS = (time: number) => {
+        let minutes = Math.floor(time / 60)
+        let seconds = Math.floor(time % 60)
+        return `${minutes < 10 ? "0" + minutes : minutes}:${seconds < 10 ? "0" + seconds : seconds}`
+    }
+
     return (
         <div className={classes.player}>
             {currentTrack && <CurrentTrack name={currentTrack.name}
-                          albumUrl={currentTrack.album.id}
-                          artists={currentTrack.artists}
-                          thumbnail={currentTrack.album.images[2].url} />}
+                                           albumUrl={currentTrack.album.id}
+                                           artists={currentTrack.artists}
+                                           thumbnail={currentTrack.album.images[2].url}/>}
             <div className={classes.playerControls}>
                 <audio
                     src={currentTrack?.preview_url}
@@ -77,21 +64,49 @@ const Player: React.FC = () => {
                     ref={audioRef}
                 />
                 <div className={classes.controlButtons}>
-                    <button>prev</button>
-                    <button className={classes.button} onClick={play}>play</button>
-                    <button className={classes.button} onClick={pause}>pause</button>
-                    <button className={classes.button} onClick={stop}>stop</button>
-                    <button>next</button>
+                    <button className={classes.prevTrack}>
+                        <img src={prevBtnSvg} alt=""/>
+                    </button>
+                    {audioRef.current && audioRef.current.paused
+                        ? <button className={classes.playBtn} onClick={play}>
+                            <img src={playBtnSvg} alt=""/>
+                        </button>
+                        : <button className={classes.pauseBtn} onClick={pause}>
+                            <img src={pauseBtnSvg} alt=""/>
+                        </button>
+                    }
+                    <button className={classes.nextTrack}>
+                        <img src={nextBtnSvg} alt=""/>
+                    </button>
                 </div>
                 <div className={classes.trackProgress}>
-                    <button className={classes.button} onClick={currentTimeUp}>currentTimeUp</button>
-                    <button className={classes.button} onClick={currentTimeDown}>currentTimeDown</button>
-                    duration: {duration} currentTime: {currentTime}
+                    <p className={classes.currentTime}>{convertToMMSS(currentTime)}</p>
+                    <input className={classes.trackLine}
+                           type="range"
+                           step={1}
+                           min={0}
+                           max={Math.floor(duration)}
+                           value={Math.floor(currentTime)}
+                           onChange={(e) => {
+                               if (audioRef && audioRef.current) {
+                                   audioRef.current.currentTime = +e.target.value
+                               }
+                           }}/>
+                    <p className={classes.duration}>{convertToMMSS(duration)} </p>
                 </div>
             </div>
             <div className={classes.extendedControls}>
-                <button className={classes.button} onClick={volumeUp}>volumeUp</button>
-                <button className={classes.button} onClick={volumeDown}>volumeDown</button>
+                <input className={classes.trackLine}
+                       type="range"
+                       min={0}
+                       max={1}
+                       step={0.05}
+                       value={audioRef.current ? audioRef.current.volume : 0}
+                       onChange={(e) => {
+                           if (audioRef && audioRef.current) {
+                               audioRef.current.volume = +e.target.value
+                           }
+                       }}/>
             </div>
         </div>
     );
