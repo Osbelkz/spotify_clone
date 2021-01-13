@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {tokenDataType, setAccessToken} from './store/app-reducer';
 import {AppRootStateType} from "./store/store";
 import {Route, Switch} from 'react-router-dom';
-import Home from "./pages/home/Home";
+import Main from "./pages/main/Main";
 
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
         <>
             {isLoggedIn
                 ? <Switch>
-                    <Route to={"/"} render={() => <Home/>}/>
+                    <Route to={"/"} render={() => <Main/>}/>
                 </Switch>
                 : <Login/>}
         </>

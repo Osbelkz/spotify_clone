@@ -1,0 +1,28 @@
+@import "src/styles/variables";
+
+.playlistCard {
+  max-width: 20rem;
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  background-color: $light_black;
+  border-radius: 5px;
+  &:hover {
+    background-color: $dark_gray;
+  }
+  .hover {
+    display: block;
+    max-width: 100%;
+  }
+  .name {
+    margin-top: 1.6rem;
+    font-weight: 500;
+    font-size: 1.4rem;
+    color: $light_xl;
+  }
+  .description {
+    margin-top: .6rem;
+    color: $light_gray;
+    word-break: break-word;
+  }
+}

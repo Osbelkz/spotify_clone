@@ -8,15 +8,13 @@ import playBtnSvg from "../../../assets/UI/player/Play.svg"
 import pauseBtnSvg from "../../../assets/UI/player/pause_icon.svg"
 import prevBtnSvg from "../../../assets/UI/player/prev.svg"
 import nextBtnSvg from "../../../assets/UI/player/next_icon.png"
+import { convertToMMSS } from '../../../helpers/helpers';
 
 const Player: React.FC = () => {
 
 
-    const currentTrack = useSelector<AppRootStateType, SpotifyApi.TrackObjectFull | undefined>(state => state.player.currentTrack)
+    const currentTrack = useSelector<AppRootStateType, SpotifyApi.SingleTrackResponse | null>(state => state.player.currentTrack)
 
-    if (currentTrack) {
-    }
-    console.log(currentTrack)
     const audioRef = useRef<HTMLAudioElement>(null);
 
     const [duration, setDuration] = useState(0);
@@ -45,11 +43,6 @@ const Player: React.FC = () => {
     const play = () => audioRef && audioRef.current && audioRef.current.play();
     const pause = () => audioRef && audioRef.current && audioRef.current.pause();
 
-    const convertToMMSS = (time: number) => {
-        let minutes = Math.floor(time / 60)
-        let seconds = Math.floor(time % 60)
-        return `${minutes < 10 ? "0" + minutes : minutes}:${seconds < 10 ? "0" + seconds : seconds}`
-    }
 
     return (
         <div className={classes.player}>

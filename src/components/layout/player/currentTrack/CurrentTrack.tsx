@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import classes from "./CurrentTrack.module.scss"
 
 type PropsType = {
@@ -9,9 +10,16 @@ type PropsType = {
 }
 
 const MyComponent: React.FC<PropsType> = ({name, artists, thumbnail, albumUrl}) => {
+
+    const history = useHistory()
+
+    const openAlbum = () => {
+        history.push(`album/${albumUrl}`)
+    }
+
     return (
         <div className={classes.currentTrack}>
-            <a href={albumUrl}><img className={classes.trackImage} src={thumbnail} alt=""/></a>
+            <div onClick={openAlbum}><img className={classes.trackImage} src={thumbnail} alt=""/></div>
             <div className={classes.trackInfo}>
                 <p className={classes.trackName}>{name}</p>
                 <p className={classes.trackArtists}>{artists.map(artist => artist.name).join(", ")}</p>

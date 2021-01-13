@@ -47,7 +47,9 @@
     }
   }
   .extendedControls {
-
+    flex: 0 1 25%;
+    display: flex;
+    justify-content: flex-end;
   }
 }
 
