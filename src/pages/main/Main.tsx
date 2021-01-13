@@ -5,8 +5,11 @@ import Layout from "../../components/layout/Layout";
 import {Route, Switch } from 'react-router-dom';
 import RecentlyPlayed from "./yourLibrary/recentlyPlayed/RecentlyPlayed";
 import LikedTracks from "./yourLibrary/LikedTracks/LikedTracks";
+import Home from "./home/Home";
+import Album from "./album/Album";
+import Playlist from './playlist/Playlist';
 
-const Home:React.FC = ({}) => {
+const Main:React.FC = ({}) => {
 
     const dispatch = useDispatch()
 
@@ -20,6 +23,9 @@ const Home:React.FC = ({}) => {
     return (
         <Layout>
             <Switch>
+                <Route path={"/"} exact component={Home}/>
+                <Route path={"/album/:id"} component={Album}/>
+                <Route path={"/playlist/:id"} component={Playlist}/>
                 <Route path={"/recently-played"} component={RecentlyPlayed} />
                 <Route path={"/liked-songs"} component={LikedTracks} />
             </Switch>
@@ -27,4 +33,4 @@ const Home:React.FC = ({}) => {
     );
 };
 
-export default Home;
+export default Main;
