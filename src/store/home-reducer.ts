@@ -3,8 +3,10 @@ import {spotifyWebApi} from "../api/spotify-web-api";
 
 const initialState = {
     displayName: "" as string | undefined,
-    myRecentlyPlayedTracks: [] as Array<SpotifyApi.PlayHistoryObject>,
-    mySavedTracks: [] as Array<SpotifyApi.SavedTrackObject>
+
+    featuredPlaylists: [] as SpotifyApi.PlaylistObjectSimplified[],
+    newReleases: [] as  SpotifyApi.AlbumObjectSimplified[],
+
 }
 
 export type HomeStateType = typeof initialState
@@ -12,19 +14,21 @@ export type HomeStateType = typeof initialState
 export const getMyInfo = createAsyncThunk
 ("getMyInfo", async (arg, thunkAPI) => {
     let result = await spotifyWebApi.getMe()
-    console.log(result)
     return result.display_name
 })
 
-export const getMyRecentlyPlayedTracks = createAsyncThunk
-("getMyRecentlyPlayedTracks", async (arg, thunkAPI) => {
-    let result = await spotifyWebApi.getMyRecentlyPlayedTracks()
-    return result.items
+export const getFeaturedPlaylists = createAsyncThunk
+("getFeaturedPlaylists", async (arg, thunkAPI) => {
+    let result = await spotifyWebApi.getFeaturedPlaylists()
+    console.log("featuredPlaylists",result)
+    return result.playlists.items
 })
-export const getMySavedTracks = createAsyncThunk
-("getMySavedTracks", async (arg, thunkAPI) => {
-    let result = await spotifyWebApi.getMySavedTracks()
-    return result.items
+
+export const getNewReleases = createAsyncThunk
+("getNewReleases", async (arg, thunkAPI) => {
+    let result = await spotifyWebApi.getNewReleases()
+    console.log("newReleases",result)
+    return result.albums.items
 })
 
 export const homeSlice = createSlice({
@@ -36,11 +40,11 @@ export const homeSlice = createSlice({
             .addCase(getMyInfo.fulfilled, (state, action) => {
                 state.displayName = action.payload
             })
-            .addCase(getMyRecentlyPlayedTracks.fulfilled, (state, action) => {
-                state.myRecentlyPlayedTracks = action.payload
+            .addCase(getFeaturedPlaylists.fulfilled, (state, action) => {
+                state.featuredPlaylists = action.payload
             })
-            .addCase(getMySavedTracks.fulfilled, (state, action) => {
-                state.mySavedTracks = action.payload
+            .addCase(getNewReleases.fulfilled, (state, action) => {
+                state.newReleases = action.payload
             })
     )
 })

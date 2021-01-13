@@ -1,26 +1,28 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import { spotifyWebApi } from "../api/spotify-web-api";
 
 const initialState = {
-    currentTrack: undefined as SpotifyApi.TrackObjectFull | undefined
+    currentTrack: null as SpotifyApi.SingleTrackResponse | null
 }
 
-// export const getMyInfo = createAsyncThunk
-// ("getMyInfo", async (arg, thunkAPI) => {
-//     let result = await spotifyWebApi.getMe()
-//     console.log(result)
-//     return result.display_name
-// })
+export const getTrack = createAsyncThunk<SpotifyApi.SingleTrackResponse, {trackId: string}>
+("getTrack", async ({trackId}, thunkAPI) => {
+    let result = await spotifyWebApi.getTrack(trackId)
+    console.log(result)
+    return result
+})
 
 export const playerSlice = createSlice({
     name: "player",
     initialState: initialState,
-    reducers: {
-        setTrack: (state, action: PayloadAction<SpotifyApi.TrackObjectSimplified>) => {
-            state.currentTrack = action.payload as SpotifyApi.TrackObjectFull
-        }
-    },
+    reducers: {},
+    extraReducers: builder => (
+        builder
+            .addCase(getTrack.fulfilled, (state, action) => {
+                state.currentTrack = action.payload
+            })
+    )
 
 })
 
-export const {setTrack} = playerSlice.actions
 
