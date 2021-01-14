@@ -6,16 +6,19 @@ import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import {store} from "./store/store";
 import {BrowserRouter} from "react-router-dom";
+import {SkeletonTheme} from "react-loading-skeleton";
 
 ReactDOM.render(
-  <React.StrictMode>
-      <Provider store={store}>
-          <BrowserRouter>
-              <App />
-          </BrowserRouter>
-      </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <Provider store={store}>
+            <BrowserRouter>
+                <SkeletonTheme color="#202020" highlightColor="#444">
+                    <App/>
+                </SkeletonTheme>
+            </BrowserRouter>
+        </Provider>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
