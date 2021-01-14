@@ -1,0 +1,64 @@
+@import "src/styles/variables";
+
+.artist {
+  .banner {
+    background: linear-gradient($dark_gray, $dark_black);;
+    .profile {
+      display: flex;
+      justify-content: space-between;
+      padding: 1.6rem;
+      .profileRow {
+        margin-top: 11rem;
+        display: flex;
+        align-items: flex-end;
+
+        .mainImage {
+          display: block;
+          height: 13.2rem;
+          width: 13.2rem;
+          border-radius: 50%;
+          overflow: hidden;
+        }
+
+        .info {
+          display: flex;
+          flex-direction: column;
+
+          margin-left: 1.5rem;
+
+          .title {
+            font-size: 1.2rem;
+            color: $light_gray;
+            text-transform: uppercase;
+          }
+
+          .name {
+            margin-top: -.4rem;
+            font-size: 4.6rem;
+            line-height: 6.3rem;
+            color: $light_xl;
+          }
+
+          .buttons {
+            margin-top: 1rem;
+          }
+        }
+      }
+
+      .followers {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+
+        .text {
+          text-align: right;
+          display: block;
+          line-height: 1.9rem;
+          font-size: 1.2rem;
+          color: $light_gray;
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+}

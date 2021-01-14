@@ -8,6 +8,7 @@ import LikedTracks from "./yourLibrary/LikedTracks/LikedTracks";
 import Home from "./home/Home";
 import Album from "./album/Album";
 import Playlist from './playlist/Playlist';
+import Artist from "./artist/Artist";
 
 const Main:React.FC = ({}) => {
 
@@ -26,6 +27,7 @@ const Main:React.FC = ({}) => {
                 <Route path={"/"} exact component={Home}/>
                 <Route path={"/album/:id"} component={Album}/>
                 <Route path={"/playlist/:id"} component={Playlist}/>
+                <Route path={"/artist/:id"} component={Artist}/>
                 <Route path={"/recently-played"} component={RecentlyPlayed} />
                 <Route path={"/liked-songs"} component={LikedTracks} />
             </Switch>
