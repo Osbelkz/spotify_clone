@@ -6,6 +6,7 @@ import { playerSlice } from "./player-reducer";
 import {myLibrarySlice} from "./myLibrary-reducer";
 import {albumSlice} from "./album-reducer";
 import {playlistSlice} from "./playlist-reducer";
+import {artistSlice} from "./artist-reducer";
 
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     myLibrary: myLibrarySlice.reducer,
     album: albumSlice.reducer,
     playlist: playlistSlice.reducer,
+    artist: artistSlice.reducer,
     player: playerSlice.reducer,
 })
 

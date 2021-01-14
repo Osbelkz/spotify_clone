@@ -8,7 +8,7 @@ const initialState = {
 export const getPlaylist = createAsyncThunk<SpotifyApi.SinglePlaylistResponse, {id: string}>
 ("getPlaylist", async ({id}, thunkAPI) => {
     let result = await spotifyWebApi.getPlaylist(id)
-    return result
+    return result.body
 })
 
 export const playlistSlice = createSlice({

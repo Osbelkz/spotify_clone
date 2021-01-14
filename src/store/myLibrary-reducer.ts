@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {spotifyWebApi} from "../api/spotify-web-api";
 
 const initialState = {
@@ -11,12 +11,12 @@ export type MyLibraryStateType = typeof initialState
 export const getMyRecentlyPlayedTracks = createAsyncThunk
 ("getMyRecentlyPlayedTracks", async (arg, thunkAPI) => {
     let result = await spotifyWebApi.getMyRecentlyPlayedTracks()
-    return result.items
+    return result.body.items
 })
 export const getMySavedTracks = createAsyncThunk
 ("getMySavedTracks", async (arg, thunkAPI) => {
     let result = await spotifyWebApi.getMySavedTracks()
-    return result.items
+    return result.body.items
 })
 
 export const myLibrarySlice = createSlice({

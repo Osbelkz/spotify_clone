@@ -9,7 +9,7 @@ export const getTrack = createAsyncThunk<SpotifyApi.SingleTrackResponse, {trackI
 ("getTrack", async ({trackId}, thunkAPI) => {
     let result = await spotifyWebApi.getTrack(trackId)
     console.log(result)
-    return result
+    return result.body
 })
 
 export const playerSlice = createSlice({

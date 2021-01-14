@@ -7,7 +7,6 @@ const initialState = {
 
 export const setAccessToken = createAsyncThunk<unknown, tokenDataType>("setAccessToken", (tokenData, thunkAPI) => {
     spotifyWebApi.setAccessToken(tokenData.access_token)
-
 })
 
 export const appSlice = createSlice({

@@ -18,7 +18,7 @@ const Album = () => {
 
     useEffect(() => {
         dispatch(getAlbum({id}))
-    }, [])
+    }, [id])
 
     const playTrack = (trackId: string) => {
         dispatch(getTrack({trackId}))
