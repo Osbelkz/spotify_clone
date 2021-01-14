@@ -3,6 +3,8 @@ import Table, {ITableModel} from "../../../assets/UI/Table/Table";
 import {convertToMMSS} from "../../../helpers/helpers";
 import {useDispatch} from "react-redux";
 import {getTrack} from "../../../store/player-reducer";
+import ArtistsLinks from "../artistsLinks/ArtistsLinks";
+import {Link} from "react-router-dom";
 
 type PropsType = {
     tracks: Array<SpotifyApi.SavedTrackObject | SpotifyApi.PlayHistoryObject>
@@ -12,12 +14,11 @@ const Tracklist: React.FC<PropsType> = ({tracks}) => {
 
     const dispatch = useDispatch()
 
-    debugger
-
     const playTrack = (trackId: string) => {
         dispatch(getTrack({trackId}))
     }
     console.log("tracklist", tracks)
+
     const testModel: ITableModel[] = useMemo(() => ([
         {
             title: (i: number) => (
@@ -46,7 +47,7 @@ const Tracklist: React.FC<PropsType> = ({tracks}) => {
                 </th>),
             render: (d: SpotifyApi.SavedTrackObject, i: number) => (
                 <td style={{width: "30%", paddingLeft: "20px"}} key={i}>
-                    <div style={{whiteSpace: "pre-wrap"}}>{d.track.artists.map(artist => artist.name).join(", ")}</div>
+                    <ArtistsLinks artists={d.track.artists}/>
                 </td>)
         },
         {
@@ -56,7 +57,7 @@ const Tracklist: React.FC<PropsType> = ({tracks}) => {
                 </th>),
             render: (d: SpotifyApi.SavedTrackObject, i: number) => (
                 <td style={{width: "30%", paddingLeft: "20px"}} key={i}>
-                    <div style={{whiteSpace: "pre-wrap"}}>{d.track.album.name}</div>
+                    <Link to={{pathname: `/album/${d.track.album.id}`}} style={{whiteSpace: "pre-wrap", color: "inherit"}}>{d.track.album.name}</Link>
                 </td>)
         },
         {

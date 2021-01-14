@@ -52,7 +52,7 @@ const Player: React.FC = () => {
                                            thumbnail={currentTrack.album.images[2].url}/>}
             <div className={classes.playerControls}>
                 <audio
-                    src={currentTrack?.preview_url}
+                    src={currentTrack?.preview_url ? currentTrack?.preview_url : ""}
                     controls={false}
                     ref={audioRef}
                 />
