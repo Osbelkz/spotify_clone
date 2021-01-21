@@ -8,7 +8,7 @@ import playBtnSvg from "../../../assets/UI/player/Play.svg"
 import pauseBtnSvg from "../../../assets/UI/player/pause_icon.svg"
 import prevBtnSvg from "../../../assets/UI/player/prev.svg"
 import nextBtnSvg from "../../../assets/UI/player/next_icon.png"
-import { convertToMMSS } from '../../../helpers/helpers';
+import {convertToMMSS} from '../../../helpers/helpers';
 
 const Player: React.FC = () => {
 
@@ -46,10 +46,14 @@ const Player: React.FC = () => {
 
     return (
         <div className={classes.player}>
-            {currentTrack && <CurrentTrack name={currentTrack.name}
-                                           albumUrl={currentTrack.album.id}
-                                           artists={currentTrack.artists}
-                                           thumbnail={currentTrack.album.images[2].url}/>}
+
+            {currentTrack
+                ? <CurrentTrack name={currentTrack.name}
+                                albumUrl={currentTrack.album.id}
+                                artists={currentTrack.artists}
+                                thumbnail={currentTrack.album.images[2].url}/>
+                : <div style={{minWidth:"25%"}}></div>
+            }
             <div className={classes.playerControls}>
                 <audio
                     src={currentTrack?.preview_url ? currentTrack?.preview_url : ""}

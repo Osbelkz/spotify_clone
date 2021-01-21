@@ -5,6 +5,8 @@ import {getArtist} from "../../../store/artist-reducer";
 import {useParams} from "react-router-dom";
 import classes from './Artist.module.scss';
 import Skeleton from "react-loading-skeleton";
+import PopularTracks from "../../../components/artist/PopularTracks";
+import Cards from "../../../components/common/cards/Cards";
 
 const Artist = () => {
 
@@ -13,10 +15,14 @@ const Artist = () => {
     const [isLoaded, setIsLoaded] = useState(false)
 
     const artist = useSelector<AppRootStateType, SpotifyApi.SingleArtistResponse | null>(state => state.artist.artist)
-    const popularTracks = useSelector<AppRootStateType, SpotifyApi.TrackObjectFull[] | null>(state => state.artist.popularTracks)
+    const popularTracks = useSelector<AppRootStateType, SpotifyApi.TrackObjectFull[]>(state => state.artist.popularTracks)
+    const albums = useSelector<AppRootStateType,  SpotifyApi.AlbumObjectSimplified[]>(state => state.artist.albums)
+    const relatedArtists = useSelector<AppRootStateType, SpotifyApi.ArtistObjectFull[]>(state => state.artist.relatedArtists)
 
     console.log("artist", artist)
     console.log("artist popular tracks ", popularTracks)
+    console.log("artist albums ", albums)
+    console.log("artist related artists ", relatedArtists)
 
     useEffect(() => {
         dispatch(getArtist({id}))
@@ -53,7 +59,10 @@ const Artist = () => {
 
                 <div className={classes.nav}></div>
             </header>
-
+            <PopularTracks tracks={popularTracks} />
+            <div>
+                <Cards cards={albums} type={"album"}/>
+            </div>
         </div>
     );
 };
