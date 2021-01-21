@@ -1,8 +1,8 @@
 import React from 'react';
-import classes from "./PlaylistCardSkeleton.module.scss";
+import classes from "./CardSkeleton.module.scss";
 import Skeleton from "react-loading-skeleton";
 
-const PlaylistCardSkeleton = () => {
+const CardSkeleton = () => {
     return (
         <div className={classes.skeletonCard}>
             <Skeleton className={classes.skeletonImage}/>
@@ -12,4 +12,4 @@ const PlaylistCardSkeleton = () => {
     );
 };
 
-export default PlaylistCardSkeleton;
+export default CardSkeleton;
