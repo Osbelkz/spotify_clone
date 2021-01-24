@@ -1,30 +1,19 @@
-import React, {useEffect} from 'react';
-import { useParams } from 'react-router-dom';
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../../store/store";
-import {getPlaylist} from "../../../store/playlist-reducer";
+import React from 'react';
 import Tracklist from "../../../components/common/tracklist/Tracklist";
 
-const Playlist = () => {
+type PropsType = {
+    playlist: SpotifyApi.SinglePlaylistResponse
+}
 
-    let {id} = useParams<{id: string}>()
+const Playlist: React.FC<PropsType> = ({playlist}) => {
 
-    const dispatch = useDispatch()
-    const playlist = useSelector<AppRootStateType, SpotifyApi.SinglePlaylistResponse | null>(state => state.playlist.playlist)
-
-    console.log("playlist page", playlist)
-
-    useEffect(() => {
-        dispatch(getPlaylist({id}))
-    }, [id])
 
     return (
         <div>
-
             <div>
                 {playlist?.name}
             </div>
-            {playlist && <Tracklist tracks={playlist?.tracks.items as SpotifyApi.SavedTrackObject[]}/>}
+            <Tracklist tracks={playlist?.tracks.items as SpotifyApi.SavedTrackObject[]}/>
 
         </div>
     );

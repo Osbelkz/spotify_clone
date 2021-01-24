@@ -1,23 +1,15 @@
-import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {getFeaturedPlaylists, getNewReleases} from "../../../store/home-reducer";
-import {AppRootStateType} from "../../../store/store";
+import React from 'react';
 import classes from './Home.module.scss';
 import Cards from "../../../components/common/cards/Cards";
 
-const Home = () => {
+type PropsType = {
+    featuredPlaylists: SpotifyApi.PlaylistObjectSimplified[]
+    newReleases: SpotifyApi.AlbumObjectSimplified[]
+    isLoading: boolean
+}
 
-    const dispatch = useDispatch()
-    const featuredPlaylists = useSelector<AppRootStateType, Array<SpotifyApi.PlaylistObjectSimplified>>(state => state.home.featuredPlaylists)
-    const newReleases = useSelector<AppRootStateType, Array<SpotifyApi.AlbumObjectSimplified>>(state => state.home.newReleases)
-    const isLoading = useSelector<AppRootStateType, boolean>(state => state.home.isLoading)
+const Home: React.FC<PropsType> = ({newReleases, featuredPlaylists, isLoading}) => {
 
-    useEffect(() => {
-        if (!featuredPlaylists.length || !newReleases.length) {
-            dispatch(getFeaturedPlaylists())
-            dispatch(getNewReleases())
-        }
-    }, [])
 
     return (
         <div className={classes.home}>

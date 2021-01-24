@@ -1,32 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../../store/store";
-import {getArtist} from "../../../store/artist-reducer";
-import {useParams} from "react-router-dom";
+import React, {useState} from 'react';
+
 import classes from './Artist.module.scss';
 import Skeleton from "react-loading-skeleton";
 import PopularTracks from "../../../components/artist/PopularTracks";
 import Cards from "../../../components/common/cards/Cards";
 
-const Artist = () => {
+type PropsType = {
+    artist: SpotifyApi.SingleArtistResponse
+    popularTracks: SpotifyApi.TrackObjectFull[]
+    albums: SpotifyApi.AlbumObjectSimplified[]
+    relatedArtists: SpotifyApi.ArtistObjectFull[]
+}
 
-    const dispatch = useDispatch()
-    let {id} = useParams<{id: string}>()
-    const [isLoaded, setIsLoaded] = useState(false)
+const Artist: React.FC<PropsType> = ({artist, albums, popularTracks, relatedArtists}) => {
 
-    const artist = useSelector<AppRootStateType, SpotifyApi.SingleArtistResponse | null>(state => state.artist.artist)
-    const popularTracks = useSelector<AppRootStateType, SpotifyApi.TrackObjectFull[]>(state => state.artist.popularTracks)
-    const albums = useSelector<AppRootStateType,  SpotifyApi.AlbumObjectSimplified[]>(state => state.artist.albums)
-    const relatedArtists = useSelector<AppRootStateType, SpotifyApi.ArtistObjectFull[]>(state => state.artist.relatedArtists)
-
-    console.log("artist", artist)
-    console.log("artist popular tracks ", popularTracks)
-    console.log("artist albums ", albums)
-    console.log("artist related artists ", relatedArtists)
-
-    useEffect(() => {
-        dispatch(getArtist({id}))
-    }, [id])
+    const [artistImageLoadComplete, setArtistImageLoadComplete] = useState(false)
 
     return (
         <div className={classes.artist}>
@@ -34,17 +22,17 @@ const Artist = () => {
                 <div className={classes.profile}>
                     <div className={classes.profileRow}>
                         <img className={classes.mainImage}
-                             src={artist?.images[1].url}
-                             style={{display: isLoaded ? "block" : "none"}}
-                             onLoad={() => setIsLoaded(true)}
+                             src={artist.images[1].url}
+                             style={{display: artistImageLoadComplete ? "block" : "none"}}
+                             onLoad={() => setArtistImageLoadComplete(true)}
                              alt=""/>
-                        {!isLoaded && <Skeleton
+                        {!artistImageLoadComplete && <Skeleton
                             circle={true}
                             width={"13.2rem"}
                             height={"13.2rem"}/>}
                         <div className={classes.info}>
                             <p className={classes.title}>Artist</p>
-                            <p className={classes.name}>{artist?.name}</p>
+                            <p className={classes.name}>{artist.name}</p>
                             <div className={classes.buttons}>
                                 <button>Play</button>
                                 <button>following</button>
@@ -53,7 +41,7 @@ const Artist = () => {
                     </div>
                     <div className={classes.followers}>
                         <span className={classes.text}>Followers</span>
-                        <span className={classes.text}>{artist?.followers.total}</span>
+                        <span className={classes.text}>{artist.followers.total}</span>
                     </div>
                 </div>
 

@@ -5,10 +5,10 @@ import Layout from "../../components/layout/Layout";
 import {Route, Switch } from 'react-router-dom';
 import RecentlyPlayed from "./yourLibrary/recentlyPlayed/RecentlyPlayed";
 import LikedTracks from "./yourLibrary/LikedTracks/LikedTracks";
-import Home from "./home/Home";
-import Album from "./album/Album";
-import Playlist from './playlist/Playlist';
-import Artist from "./artist/Artist";
+import ArtistContainer from "./artist/ArtistContainer";
+import AlbumContainer from "./album/AlbumContainer";
+import PlaylistContainer from "./playlist/PlaylistContainer";
+import HomeContainer from "./home/HomeContainer";
 
 const Main:React.FC = ({}) => {
 
@@ -24,10 +24,10 @@ const Main:React.FC = ({}) => {
     return (
         <Layout>
             <Switch>
-                <Route path={"/"} exact component={Home}/>
-                <Route path={"/album/:id"} component={Album}/>
-                <Route path={"/playlist/:id"} component={Playlist}/>
-                <Route path={"/artist/:id"} component={Artist}/>
+                <Route path={"/"} exact component={HomeContainer}/>
+                <Route path={"/album/:id"} component={AlbumContainer}/>
+                <Route path={"/playlist/:id"} component={PlaylistContainer}/>
+                <Route path={"/artist/:id"} component={ArtistContainer}/>
                 <Route path={"/recently-played"} component={RecentlyPlayed} />
                 <Route path={"/liked-songs"} component={LikedTracks} />
             </Switch>
