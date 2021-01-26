@@ -3,6 +3,7 @@ import Table, {ITableModel} from "../common/Table/Table";
 import {convertToMMSS} from "../../helpers/helpers";
 import {getTrack} from "../../store/player-reducer";
 import {useDispatch} from "react-redux";
+import {Button} from "../common/button/Button";
 
 type PropsType = {
     tracks: SpotifyApi.TrackObjectFull[]
@@ -72,9 +73,9 @@ const PopularTracks: React.FC<PropsType> = ({tracks}) => {
             <Table
                 model={testModel}
                 data={toggle ? tracks : tracks?.slice(0, 5)}/>
-            <button onClick={() => setToggle(!toggle)}>
+            <Button onClick={() => setToggle(!toggle)}>
                 {toggle ? `Show 5 less` : `Show 5 more`}
-            </button>
+            </Button>
         </div>
     );
 };
