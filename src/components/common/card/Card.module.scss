@@ -1,4 +1,5 @@
 @import "src/styles/variables";
+@import "src/styles/mixins";
 
 .card {
   max-width: 20rem;
@@ -25,9 +26,7 @@
 
   .name {
     margin-top: 1.6rem;
-    font-weight: 500;
-    font-size: 1.4rem;
-    color: $light_xl;
+    @include h3
   }
   .description {
     margin-top: .6rem;

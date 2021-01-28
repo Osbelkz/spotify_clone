@@ -1,9 +1,10 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import Table, {ITableModel} from "../common/Table/Table";
-import {convertToMMSS} from "../../helpers/helpers";
-import {getTrack} from "../../store/player-reducer";
+import Table, {ITableModel} from "../../common/Table/Table";
+import {convertToMMSS} from "../../../helpers/helpers";
+import {getTrack} from "../../../store/player-reducer";
 import {useDispatch} from "react-redux";
-import {Button} from "../common/button/Button";
+import {Button} from "../../common/button/Button";
+import classes from "./PopularTracks.module.scss";
 
 type PropsType = {
     tracks: SpotifyApi.TrackObjectFull[]
@@ -22,10 +23,7 @@ const PopularTracks: React.FC<PropsType> = ({tracks}) => {
 
     const testModel: ITableModel[] = useMemo(() => ([
         {
-            title: (i: number) => (
-                <th style={{width: "10%"}} key={i}>
-                    <span>preview</span>
-                </th>),
+            title: (i: number) => (<th key={i}></th>),
             render: (d: SpotifyApi.TrackObjectFull, i: number) => (
                 <td style={{width: "10%"}} key={i}>
                     <button onClick={() => playTrack(d.id)}>Play</button>
@@ -41,10 +39,7 @@ const PopularTracks: React.FC<PropsType> = ({tracks}) => {
                 </td>)
         },
         {
-            title: (i: number) => (
-                <th style={{width: "60%"}} key={i}>
-                    <span>Name</span>
-                </th>),
+            title: (i: number) => (<th key={i}></th>),
             render: (d: SpotifyApi.TrackObjectFull, i: number) => (
                 <td style={{width: "60%"}} key={i}>
                     <div style={{whiteSpace: "pre-wrap"}}>
@@ -53,10 +48,7 @@ const PopularTracks: React.FC<PropsType> = ({tracks}) => {
                 </td>)
         },
         {
-            title: (i: number) => (
-                <th style={{width: "10%"}} key={i}>
-                    <span>Duration</span>
-                </th>),
+            title: (i: number) => (<th key={i}></th>),
             render: (d: SpotifyApi.TrackObjectFull, i: number) => (
                 <td style={{width: "30%"}} key={i}>
                     <div style={{whiteSpace: "pre-wrap"}}>
@@ -68,11 +60,14 @@ const PopularTracks: React.FC<PropsType> = ({tracks}) => {
     ]), [])
 
     return (
-        <div>
-            <h3>Popular</h3>
-            <Table
-                model={testModel}
-                data={toggle ? tracks : tracks?.slice(0, 5)}/>
+        <div className={classes.popularTracks}>
+            <h3 className={classes.title}>Popular</h3>
+
+            <div className={classes.table}>
+                <Table
+                    model={testModel}
+                    data={toggle ? tracks : tracks?.slice(0, 5)}/>
+            </div>
             <Button onClick={() => setToggle(!toggle)}>
                 {toggle ? `Show 5 less` : `Show 5 more`}
             </Button>

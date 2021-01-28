@@ -12,7 +12,7 @@ const PlaylistCard: React.FC<PropsType> = ({playlist}) => {
     return (
         <Card name={playlist.name}
               description={playlist.description}
-              imageSrc={playlist.images[0].url}
+              imageSrc={playlist.images[0]?.url}
               link={onClickPath}
         />
     );

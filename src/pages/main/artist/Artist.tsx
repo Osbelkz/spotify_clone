@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-
+import React from 'react';
 import classes from './Artist.module.scss';
-import Skeleton from "react-loading-skeleton";
-import PopularTracks from "../../../components/artist/PopularTracks";
+import PopularTracks from "../../../components/artist/popularTracks/PopularTracks";
 import Cards from "../../../components/common/cards/Cards";
+import {Button} from "../../../components/common/button/Button";
+import Image from "../../../components/common/image/Image";
 
 type PropsType = {
     artist: SpotifyApi.SingleArtistResponse
@@ -14,28 +14,21 @@ type PropsType = {
 
 const Artist: React.FC<PropsType> = ({artist, albums, popularTracks, relatedArtists}) => {
 
-    const [artistImageLoadComplete, setArtistImageLoadComplete] = useState(false)
 
     return (
         <div className={classes.artist}>
             <header className={classes.banner}>
                 <div className={classes.profile}>
                     <div className={classes.profileRow}>
-                        <img className={classes.mainImage}
-                             src={artist.images[1].url}
-                             style={{display: artistImageLoadComplete ? "block" : "none"}}
-                             onLoad={() => setArtistImageLoadComplete(true)}
-                             alt=""/>
-                        {!artistImageLoadComplete && <Skeleton
-                            circle={true}
-                            width={"13.2rem"}
-                            height={"13.2rem"}/>}
+                        <Image className={classes.mainImage}
+                               src={artist.images[1].url}
+                               alt={""}/>
                         <div className={classes.info}>
                             <p className={classes.title}>Artist</p>
-                            <p className={classes.name}>{artist.name}</p>
+                            <h1 className={classes.name}>{artist.name}</h1>
                             <div className={classes.buttons}>
-                                <button>Play</button>
-                                <button>following</button>
+                                <Button btnType={"green"}>Play</Button>
+                                <Button>follow</Button>
                             </div>
                         </div>
                     </div>
@@ -47,10 +40,14 @@ const Artist: React.FC<PropsType> = ({artist, albums, popularTracks, relatedArti
 
                 <div className={classes.nav}></div>
             </header>
-            <PopularTracks tracks={popularTracks} />
-            <div>
-                <Cards cards={albums} type={"album"}/>
+            <div className={classes.content}>
+                <PopularTracks tracks={popularTracks}/>
+                <div className={classes.artistAlbumsWrapper}>
+                    <h3 className={classes.title}>Albums</h3>
+                    <Cards cards={albums} type={"album"}/>
+                </div>
             </div>
+
         </div>
     );
 };

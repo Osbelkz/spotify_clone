@@ -1,18 +1,17 @@
 import React, { ButtonHTMLAttributes } from "react";
-import classes from "./Button.module.css";
+import classes from "./Button.module.scss";
 
 interface PropsType extends ButtonHTMLAttributes<HTMLButtonElement> {
-    btnName: string
-    btnType?: "green" | "red"
+    btnType?: "green"
 }
 
-export const Button = React.memo(({btnType, btnName, ...rest}: PropsType) => {
+export const Button = React.memo(({btnType, children, ...rest}: PropsType) => {
 
-    let buttonClasses = `${classes.button} ${classes[btnType as "green" | "red"]}`
+    let buttonClasses = `${classes.button} ${classes[btnType as "green"]}`
 
     return (
             <button className={buttonClasses} {...rest}>
-                {btnName}
+                {children}
             </button>
     )
 })

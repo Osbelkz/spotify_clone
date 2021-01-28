@@ -1,63 +1,36 @@
 @import "src/styles/variables.scss";
 
 .button {
-    font-size: 1.2rem;
-    font-weight: 600;
-    padding: .8rem 3.2rem;
-    transition: background-color 0.4s ease;
-    color: white;
-    box-shadow: 0 0 0 2px inset black;
-    border-radius: 999px;
-    outline: none;
+  font-family: Rubik, Arial;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.16rem;
+  padding: .8rem 3.2rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  text-transform: uppercase;
+  color: white;
+  border-radius: 999px;
+  outline: none;
+  background-color: $dark_black;
+  box-shadow: 0 0 0 1px inset $light_l;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:disabled {
+
+  }
+
+  &.green {
     background-color: $green;
-}
+    box-shadow: none;
 
-.button:hover {
-    cursor: pointer;
-    color: white;
-    background-color: cornflowerblue;
-}
+    &:hover {
+    }
 
-.button:disabled {
-    cursor: not-allowed;
-    color: #BBC1E1;
-    border-color: #BBC1E1;
-    background-color: #fff;
-}
-
-.button.green {
-
-    color: white;
-    border-color: #00b300;
-    background-color: #00b300;
-}
-
-.button.green:hover {
-    color: #00b300;
-    border-color: #00b300;
-    background-color: #fff;
-}
-
-.button.green:disabled {
-    cursor: not-allowed;
-    color: #8fb38f;
-    border-color: #8fb38f;
-    background-color: #fff;
-}
-
-.button.red {
-    color: #ff4d4d;
-    border-color: #ff4d4d;
-}
-
-.button.red:hover {
-    color: white;
-    background-color: #ff4d4d;
-}
-
-.button.red:disabled {
-    cursor: not-allowed;
-    color: #ffb3b3;
-    border-color: #ffb3b3;
-    background-color: #fff;
+    &:disabled {
+    }
+  }
 }

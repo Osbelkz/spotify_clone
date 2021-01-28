@@ -15,10 +15,10 @@ const Cards: React.FC<PropsType> = ({cards, type, isLoading = false}) => {
     return (
         <div className={classes.cards}>
             {isLoading
-                ? Array(12).fill(<CardSkeleton/>)
+                ? Array(12).fill("1").map((empty, i) => <CardSkeleton key={i}/>)
                 : type === "album"
-                    ? cards.map((card) => <AlbumCard album={card as SpotifyApi.AlbumObjectSimplified}/>)
-                    : cards.map((card) => <PlaylistCard playlist={card as SpotifyApi.PlaylistObjectSimplified}/>)
+                    ? cards.map((card) => <AlbumCard key={card.id} album={card as SpotifyApi.AlbumObjectSimplified}/>)
+                    : cards.map((card) => <PlaylistCard key={card.id} playlist={card as SpotifyApi.PlaylistObjectSimplified}/>)
             }
         </div>
     );

@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import classes from "./Card.module.scss";
+import Image from "../image/Image";
 
 type PropsType = {
     imageSrc: string,
@@ -11,16 +12,11 @@ type PropsType = {
 
 const Card: React.FC<PropsType> = ({link, name, description, imageSrc}) => {
 
-    let [imageLoadComplete, setImageLoadComplete] = useState(false)
-
-
     return (
         <div className={classes.card}>
             <Link to={{pathname: link}}>
                 <div className={classes.imageWrapper}>
-                    <img className={classes.hover}
-                         style={{opacity: imageLoadComplete ? "1" : "0"}}
-                         onLoad={() => setImageLoadComplete(true)}
+                    <Image className={classes.hover}
                          src={imageSrc} alt=""/>
                 </div>
             </Link>

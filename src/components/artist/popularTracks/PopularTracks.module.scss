@@ -1,0 +1,12 @@
+@import "src/styles/mixins";
+@import "src/styles/variables";
+
+.popularTracks {
+  .title {
+    @include h3();
+  }
+
+  .table {
+    margin-bottom: 2.5rem;
+  }
+}
