@@ -2,6 +2,7 @@
 @import "src/styles/mixins";
 
 .banner {
+  background: linear-gradient($light_gray, $dark_black);
   .profile {
     display: flex;
     justify-content: space-between;
@@ -33,9 +34,7 @@
 
         .name {
           margin-top: -.4rem;
-          font-size: 4.6rem;
-          line-height: 6.3rem;
-          color: $light_xl;
+          @include h1();
         }
         .description {
           font-size: 1.6rem;

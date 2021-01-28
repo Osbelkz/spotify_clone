@@ -1,43 +1,44 @@
 import React from 'react';
-import classes from "./PlaylistHeader.module.scss";
-import {Button} from "../button/Button";
+import classes from "./TracklistHeader.module.scss";
+import Image from "../common/image/Image";
+import {Button} from "../common/button/Button";
 
 
 type PropsType = {
-    playlist: SpotifyApi.SinglePlaylistResponse
+    imageUrl: string
+    name: string
+    type: string
+    followers?: number
 }
 
-const PlaylistHeader: React.FC<PropsType> = ({playlist}) => {
-
-    // @ts-ignore
-    const gradientColor = playlist.primary_color
+const TracklistHeader: React.FC<PropsType> = ({imageUrl, type, name, followers, children}) => {
 
     return (
-        <header className={classes.banner}
-                style={{background: `linear-gradient(${gradientColor ?? `#333`}, #121212)`}}
-        >
+        <header className={classes.banner}>
             <div className={classes.profile}>
                 <div className={classes.profileRow}>
-                    <img className={classes.mainImage}
-                         src={playlist.images[0].url}
-                         alt=""/>
+                    <Image className={classes.mainImage}
+                           src={imageUrl}
+                           alt=""/>
                     <div className={classes.info}>
-                        <p className={classes.title}>{playlist.type}</p>
-                        <p className={classes.name}>{playlist.name}</p>
-                        <p className={classes.description}>{playlist.description}</p>
+                        <p className={classes.title}>{type}</p>
+                        <h1 className={classes.name}>{name}</h1>
+                        <p className={classes.description}>{children}</p>
                         <div className={classes.buttons}>
                             <Button btnType={"green"}>Play</Button>
                             <Button>follow</Button>
                         </div>
                     </div>
+
                 </div>
-                <div className={classes.followers}>
+                {followers && <div className={classes.followers}>
                     <span className={classes.text}>Followers</span>
-                    <span className={classes.text}>{playlist.followers.total}</span>
-                </div>
+                    <span className={classes.text}>{followers}</span>
+                </div>}
+
             </div>
         </header>
     );
 };
 
-export default PlaylistHeader;
+export default TracklistHeader;

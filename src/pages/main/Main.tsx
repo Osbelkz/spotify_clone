@@ -9,6 +9,7 @@ import ArtistContainer from "./artist/ArtistContainer";
 import AlbumContainer from "./album/AlbumContainer";
 import PlaylistContainer from "./playlist/PlaylistContainer";
 import HomeContainer from "./home/HomeContainer";
+import MyTopArtists from "./yourLibrary/myTopArtists/MyTopArtists";
 
 const Main:React.FC = ({}) => {
 
@@ -30,6 +31,7 @@ const Main:React.FC = ({}) => {
                 <Route path={"/artist/:id"} component={ArtistContainer}/>
                 <Route path={"/recently-played"} component={RecentlyPlayed} />
                 <Route path={"/liked-songs"} component={LikedTracks} />
+                <Route path={"/artists"} component={MyTopArtists} />
             </Switch>
         </Layout>
     );

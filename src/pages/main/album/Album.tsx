@@ -3,6 +3,7 @@ import React, {useMemo} from 'react';
 import Table, {ITableModel} from "../../../components/common/Table/Table";
 import {convertToMMSS} from "../../../helpers/helpers";
 import ArtistsLinks from "../../../components/common/artistsLinks/ArtistsLinks";
+import TracklistHeader from "../../../components/tracklistHeader/TracklistHeader";
 
 
 type PropsType = {
@@ -59,6 +60,11 @@ const Album: React.FC<PropsType> = ({playTrack, album}) => {
 
     return (
         <div>
+            <TracklistHeader imageUrl={album.images[0].url}
+                             type={album.type}
+                             name={album.name}>
+                <ArtistsLinks artists={album.artists} />
+            </TracklistHeader>
             <Table model={testModel} data={album.tracks.items} disabled={false}/>
         </div>
     );
