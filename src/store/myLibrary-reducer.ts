@@ -2,8 +2,9 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {spotifyWebApi} from "../api/spotify-web-api";
 
 const initialState = {
-    myRecentlyPlayedTracks: [] as Array<SpotifyApi.PlayHistoryObject>,
-    mySavedTracks: [] as Array<SpotifyApi.SavedTrackObject>
+    myRecentlyPlayedTracks: [] as SpotifyApi.PlayHistoryObject[],
+    mySavedTracks: [] as SpotifyApi.SavedTrackObject[],
+    myTopArtists: [] as  SpotifyApi.ArtistObjectFull[]
 }
 
 export type MyLibraryStateType = typeof initialState
@@ -19,6 +20,11 @@ export const getMySavedTracks = createAsyncThunk
     return result.body.items
 })
 
+export const getMyTopArtists = createAsyncThunk("getMyTopArtists", async (arg, thunkAPI) => {
+    let result = await spotifyWebApi.getMyTopArtists()
+    return result.body.items
+})
+
 export const myLibrarySlice = createSlice({
     name: "myLibrary",
     initialState: initialState,
@@ -30,6 +36,9 @@ export const myLibrarySlice = createSlice({
             })
             .addCase(getMySavedTracks.fulfilled, (state, action) => {
                 state.mySavedTracks = action.payload
+            })
+            .addCase(getMyTopArtists.fulfilled, (state, action) => {
+                state.myTopArtists = action.payload
             })
     )
 })

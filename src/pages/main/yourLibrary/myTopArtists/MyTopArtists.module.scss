@@ -1,0 +1,15 @@
+@import "src/styles/mixins";
+@import "src/styles/variables";
+
+.myTopArtists {
+  padding: 1.6rem;
+  .title {
+    @include h1();
+  }
+  .artistsCards {
+    margin-top: 1.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem;
+  }
+}
