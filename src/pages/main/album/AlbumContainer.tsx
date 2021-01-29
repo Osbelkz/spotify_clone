@@ -12,6 +12,7 @@ const AlbumContainer = () => {
 
     const dispatch = useDispatch()
     const album = useSelector<AppRootStateType, SpotifyApi.SingleAlbumResponse | null>(state => state.album.album)
+    const containsMySavedTracks = useSelector<AppRootStateType, boolean[]>(state => state.album.containsMySavedTracks)
 
     console.log("album page", album)
 
@@ -28,7 +29,9 @@ const AlbumContainer = () => {
         <>
             {
                 (id === album?.id)
-                    ? <Album album={album} playTrack={playTrack}/>
+                    ? <Album album={album}
+                             containsMySavedTracks={containsMySavedTracks}
+                             playTrack={playTrack}/>
                     : <div style={{color: "white"}}>Loading</div>
             }
         </>

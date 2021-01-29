@@ -9,7 +9,9 @@ import classes from "./RecentlyPlayed.module.scss";
 const RecentlyPlayed = () => {
 
     const dispatch = useDispatch()
-    const myRecentlyPlayedTracks = useSelector<AppRootStateType, Array<SpotifyApi.PlayHistoryObject>>(state => state.myLibrary.myRecentlyPlayedTracks)
+    const myRecentlyPlayedTracks = useSelector<AppRootStateType, Array<SpotifyApi.PlayHistoryObject>>(state => state.myLibrary.myRecentlyPlayedTracks.tracks)
+    const containsMySavedTracks = useSelector<AppRootStateType, boolean[]>(state => state.myLibrary.myRecentlyPlayedTracks.containsMySavedTracks)
+
 
 
     useEffect(() => {
@@ -18,7 +20,7 @@ const RecentlyPlayed = () => {
 
     return (
         <div className={classes.recentlyPlayed}>
-            <Tracklist tracks={myRecentlyPlayedTracks} />
+            <Tracklist tracks={myRecentlyPlayedTracks} containsMySavedTracks={containsMySavedTracks} />
         </div>
     );
 };

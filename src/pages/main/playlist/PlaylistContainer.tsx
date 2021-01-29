@@ -8,10 +8,11 @@ import {getPlaylist} from "../../../store/playlist-reducer";
 
 const PlaylistContainer = () => {
 
-    let {id} = useParams<{id: string}>()
+    let {id} = useParams<{ id: string }>()
 
     const dispatch = useDispatch()
     const playlist = useSelector<AppRootStateType, SpotifyApi.SinglePlaylistResponse | null>(state => state.playlist.playlist)
+    const containsMySavedTracks = useSelector<AppRootStateType, boolean[]>(state => state.playlist.containsMySavedTracks)
 
     console.log("playlist page", playlist)
 
@@ -24,7 +25,9 @@ const PlaylistContainer = () => {
         <>
             {
                 (id === playlist?.id)
-                    ? <Playlist playlist={playlist}/>
+                    ? <Playlist playlist={playlist}
+                                containsMySavedTracks={containsMySavedTracks}
+                    />
                     : <div style={{color: "white"}}>Loading</div>
             }
         </>

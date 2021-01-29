@@ -5,9 +5,10 @@ import TracklistHeader from "../../../components/tracklistHeader/TracklistHeader
 
 type PropsType = {
     playlist: SpotifyApi.SinglePlaylistResponse
+    containsMySavedTracks: boolean[]
 }
 
-const Playlist: React.FC<PropsType> = ({playlist}) => {
+const Playlist: React.FC<PropsType> = ({playlist, containsMySavedTracks}) => {
 
     return (
         <div className={classes.playlist}>
@@ -17,7 +18,10 @@ const Playlist: React.FC<PropsType> = ({playlist}) => {
                              type={playlist.type}>
                 {playlist.description}
             </TracklistHeader>
-            <Tracklist tracks={playlist.tracks.items as SpotifyApi.SavedTrackObject[]}/>
+            <Tracklist
+                tracks={playlist.tracks.items as SpotifyApi.SavedTrackObject[]}
+                containsMySavedTracks={containsMySavedTracks}
+            />
 
         </div>
     );

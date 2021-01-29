@@ -1,11 +1,13 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {spotifyWebApi} from "../api/spotify-web-api";
+import {getArrContainInMySavedTracks} from "../helpers/helpers";
 
 const initialState = {
     artist: null as SpotifyApi.SingleArtistResponse | null,
     popularTracks: [] as SpotifyApi.TrackObjectFull[],
     albums: [] as  SpotifyApi.AlbumObjectSimplified[],
-    relatedArtists: [] as  SpotifyApi.ArtistObjectFull[]
+    relatedArtists: [] as  SpotifyApi.ArtistObjectFull[],
+    containsMySavedTracks: [] as boolean[]
 }
 
 export const getArtist = createAsyncThunk
@@ -17,12 +19,15 @@ export const getArtist = createAsyncThunk
             spotifyWebApi.getArtistAlbums(id),
             spotifyWebApi.getArtistRelatedArtists(id)
         ])
-    console.log(artist, popular)
+
+    let listId: string[] = popular.body.tracks.map(track => track.id)
+
     return {
         artist: artist.body,
         popularTracks: popular.body.tracks,
         albums: albums.body.items,
-        relatedArtists: relatedArtists.body.artists
+        relatedArtists: relatedArtists.body.artists,
+        containsMySavedTracks: await getArrContainInMySavedTracks(listId)
     }
 })
 

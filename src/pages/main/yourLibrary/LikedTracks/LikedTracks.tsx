@@ -8,7 +8,8 @@ import classes from './LikedTracks.module.scss';
 const LikedTracks = () => {
 
     const dispatch = useDispatch()
-    const mySavedTracks = useSelector<AppRootStateType, Array<SpotifyApi.SavedTrackObject>>(state => state.myLibrary.mySavedTracks)
+    const mySavedTracks = useSelector<AppRootStateType, Array<SpotifyApi.SavedTrackObject>>(state => state.myLibrary.mySavedTracks.tracks)
+    const containsMySavedTracks = useSelector<AppRootStateType, boolean[]>(state => state.myLibrary.mySavedTracks.containsMySavedTracks)
 
     useEffect(() => {
         dispatch(getMySavedTracks())
@@ -16,7 +17,7 @@ const LikedTracks = () => {
 
     return (
         <div className={classes.likedTracks}>
-            <Tracklist tracks={mySavedTracks}/>
+            <Tracklist tracks={mySavedTracks} containsMySavedTracks={containsMySavedTracks}/>
         </div>
     );
 };

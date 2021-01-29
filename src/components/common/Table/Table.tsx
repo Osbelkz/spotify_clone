@@ -2,17 +2,20 @@ import React from 'react';
 import classes from "./Table.module.scss";
 
 export interface ITableModel {
-    title: (index: number) => JSX.Element;
-    render: (dataItem: any, modelIndex: number, dataIndex: number) => JSX.Element;
+    title: (index: number) => JSX.Element
+    render: (dataItem: any, modelIndex: number, dataIndex: number, contains?: boolean) => JSX.Element
 }
 
 interface ITableProps {
-    model: ITableModel[];
-    data: any;
+    model: ITableModel[]
+    data: any
     disabled?: boolean
+    contains?: boolean[]
 }
 
-const Table: React.FC<ITableProps> = React.memo(({model, data, disabled = false}) => {
+const Table: React.FC<ITableProps> = React.memo(({model, data, contains = [], disabled = false}) => {
+
+    console.log(contains)
 
     return (
         <table className={`${classes.table} ${disabled ? classes.table__loading : ""}`}>
@@ -24,7 +27,7 @@ const Table: React.FC<ITableProps> = React.memo(({model, data, disabled = false}
             <tbody>
             {data.map((dataItem: any, dataIndex: number) => (
                 <tr className={classes.data} key={dataItem._id}>
-                    {model.map((m, modelIndex) => m.render(dataItem, modelIndex, dataIndex))}
+                    {model.map((m, modelIndex) => m.render(dataItem, modelIndex, dataIndex, contains[dataIndex]))}
                 </tr>
             ))}
             </tbody>

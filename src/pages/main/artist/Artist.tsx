@@ -10,9 +10,10 @@ type PropsType = {
     popularTracks: SpotifyApi.TrackObjectFull[]
     albums: SpotifyApi.AlbumObjectSimplified[]
     relatedArtists: SpotifyApi.ArtistObjectFull[]
+    containsMySavedTracks: boolean[]
 }
 
-const Artist: React.FC<PropsType> = ({artist, albums, popularTracks, relatedArtists}) => {
+const Artist: React.FC<PropsType> = ({artist, albums, popularTracks, containsMySavedTracks, relatedArtists}) => {
 
 
     return (
@@ -41,7 +42,7 @@ const Artist: React.FC<PropsType> = ({artist, albums, popularTracks, relatedArti
                 <div className={classes.nav}></div>
             </header>
             <div className={classes.content}>
-                <PopularTracks tracks={popularTracks}/>
+                <PopularTracks tracks={popularTracks} containsMySavedTracks={containsMySavedTracks}/>
                 <div className={classes.artistAlbumsWrapper}>
                     <h3 className={classes.title}>Albums</h3>
                     <Cards cards={albums} type={"album"}/>

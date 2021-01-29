@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import {AppRootStateType} from "../../../store/store";
 import {getArtist} from "../../../store/artist-reducer";
+import {getArrContainInMySavedTracks} from "../../../helpers/helpers";
 
 const ArtistContainer = () => {
 
@@ -14,10 +15,8 @@ const ArtistContainer = () => {
     const popularTracks = useSelector<AppRootStateType, SpotifyApi.TrackObjectFull[]>(state => state.artist.popularTracks)
     const albums = useSelector<AppRootStateType, SpotifyApi.AlbumObjectSimplified[]>(state => state.artist.albums)
     const relatedArtists = useSelector<AppRootStateType, SpotifyApi.ArtistObjectFull[]>(state => state.artist.relatedArtists)
+    const containsMySavedTracks = useSelector<AppRootStateType, boolean[]>(state => state.artist.containsMySavedTracks)
 
-    console.log("artist", artist)
-    console.log("artist popular tracks ", popularTracks)
-    console.log("artist albums ", albums)
     console.log("artist related artists ", relatedArtists)
 
     useEffect(() => {
@@ -33,6 +32,7 @@ const ArtistContainer = () => {
                     : <Artist artist={artist}
                               popularTracks={popularTracks}
                               albums={albums}
+                              containsMySavedTracks={containsMySavedTracks}
                               relatedArtists={relatedArtists}/>
             }
         </>

@@ -1,14 +1,20 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {spotifyWebApi} from "../api/spotify-web-api";
+import { getArrContainInMySavedTracks } from "../helpers/helpers";
 
 const initialState = {
     playlist: null as SpotifyApi.SinglePlaylistResponse | null,
+    containsMySavedTracks: [] as boolean[]
 }
 
-export const getPlaylist = createAsyncThunk<SpotifyApi.SinglePlaylistResponse, {id: string}>
-("getPlaylist", async ({id}, thunkAPI) => {
-    let result = await spotifyWebApi.getPlaylist(id)
-    return result.body
+export const getPlaylist = createAsyncThunk
+("getPlaylist", async ({id}: { id: string }, thunkAPI) => {
+
+    let playlist = await spotifyWebApi.getPlaylist(id)
+
+    let listId: string[] = playlist.body.tracks.items.map(track => track.track.id)
+
+    return {playlist: playlist.body, containsMySavedTracks: await getArrContainInMySavedTracks(listId)}
 })
 
 export const playlistSlice = createSlice({
@@ -18,7 +24,7 @@ export const playlistSlice = createSlice({
     extraReducers: builder => (
         builder
             .addCase(getPlaylist.fulfilled, (state, action) => {
-                state.playlist = action.payload
+                Object.assign(state, action.payload)
             })
     )
 })

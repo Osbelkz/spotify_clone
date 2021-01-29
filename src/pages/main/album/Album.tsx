@@ -9,10 +9,11 @@ import TracklistHeader from "../../../components/tracklistHeader/TracklistHeader
 type PropsType = {
     playTrack: (trackId: string) => void
     album: SpotifyApi.SingleAlbumResponse
+    containsMySavedTracks: boolean[]
 }
 
 
-const Album: React.FC<PropsType> = ({playTrack, album}) => {
+const Album: React.FC<PropsType> = ({playTrack, album, containsMySavedTracks}) => {
 
     const testModel: ITableModel[] = useMemo(() => ([
         {
@@ -20,9 +21,10 @@ const Album: React.FC<PropsType> = ({playTrack, album}) => {
                 <th style={{width: "10%"}} key={i}>
                     <span>preview</span>
                 </th>),
-            render: (d: SpotifyApi.TrackObjectSimplified, i: number) => (
+            render: (d: SpotifyApi.TrackObjectSimplified, i, _, contains) => (
                 <td style={{width: "10%"}} key={i}>
                     <button onClick={() => playTrack(d.id)}>Play</button>
+                    <div>{contains ? "yes" : "no"}</div>
                 </td>)
         },
         {
@@ -30,7 +32,7 @@ const Album: React.FC<PropsType> = ({playTrack, album}) => {
                 <th style={{width: "30%"}} key={i}>
                     <span>Name</span>
                 </th>),
-            render: (d: SpotifyApi.TrackObjectSimplified, i: number) => (
+            render: (d: SpotifyApi.TrackObjectSimplified, i) => (
                 <td style={{width: "30%"}} key={i}>
                     <div style={{whiteSpace: "pre-wrap"}}>{d.name}</div>
                 </td>)
@@ -40,7 +42,7 @@ const Album: React.FC<PropsType> = ({playTrack, album}) => {
                 <th style={{width: "30%"}} key={i}>
                     <span>Artist</span>
                 </th>),
-            render: (d: SpotifyApi.TrackObjectSimplified, i: number) => (
+            render: (d: SpotifyApi.TrackObjectSimplified, i) => (
                 <td style={{width: "30%"}} key={i}>
                     <ArtistsLinks artists={d.artists} />
                 </td>)
@@ -50,7 +52,7 @@ const Album: React.FC<PropsType> = ({playTrack, album}) => {
                 <th style={{width: "10%"}} key={i}>
                     <span>Duration</span>
                 </th>),
-            render: (d: SpotifyApi.TrackObjectSimplified, i: number) => (
+            render: (d: SpotifyApi.TrackObjectSimplified, i) => (
                 <td style={{width: "10%"}} key={i}>
                     <div style={{whiteSpace: "pre-wrap"}}>{convertToMMSS(d.duration_ms / 1000)}</div>
                 </td>)
@@ -65,7 +67,7 @@ const Album: React.FC<PropsType> = ({playTrack, album}) => {
                              name={album.name}>
                 <ArtistsLinks artists={album.artists} />
             </TracklistHeader>
-            <Table model={testModel} data={album.tracks.items} disabled={false}/>
+            <Table model={testModel} data={album.tracks.items} disabled={false} contains={containsMySavedTracks}/>
         </div>
     );
 };
