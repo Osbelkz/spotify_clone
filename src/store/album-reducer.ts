@@ -16,6 +16,18 @@ export const getAlbum = createAsyncThunk
     return {album: result.body, containsMySavedTracks: await getArrContainInMySavedTracks(listId)}
 })
 
+export const toggleFromYourSavedTracksAlbum = createAsyncThunk
+("toggleFromYourSavedTracksAlbum",
+    async ({trackId, value, index}: {trackId: string, value: boolean, index: number}, thunkAPI) => {
+    if (value) {
+        let result = await spotifyWebApi.removeFromMySavedTracks([trackId])
+    } else {
+        let result = await spotifyWebApi.addToMySavedTracks([trackId])
+    }
+    return {index: index}
+})
+
+
 export const albumSlice = createSlice({
     name: "album",
     initialState: initialState,
@@ -24,6 +36,9 @@ export const albumSlice = createSlice({
         builder
             .addCase(getAlbum.fulfilled, (state, action) => {
                 Object.assign(state, action.payload)
+            })
+            .addCase(toggleFromYourSavedTracksAlbum.fulfilled, (state, action) => {
+                state.containsMySavedTracks[action.payload.index] = !state.containsMySavedTracks[action.payload.index]
             })
     )
 })

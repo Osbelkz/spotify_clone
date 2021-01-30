@@ -5,13 +5,15 @@ import {useDispatch} from "react-redux";
 import {getTrack} from "../../../store/player-reducer";
 import ArtistsLinks from "../artistsLinks/ArtistsLinks";
 import {Link} from "react-router-dom";
+import LikeButton from "../likeButton/LikeButton";
 
 type PropsType = {
     tracks: Array<SpotifyApi.SavedTrackObject | SpotifyApi.PlayHistoryObject>
-    containsMySavedTracks?: boolean[]
+    containsMySavedTracks: boolean[]
+    toggleFromYourSavedTracks: (trackId: string, value: boolean, index: number) => void
 }
 
-const Tracklist: React.FC<PropsType> = ({tracks, containsMySavedTracks = []}) => {
+const Tracklist: React.FC<PropsType> = ({tracks, containsMySavedTracks, toggleFromYourSavedTracks}) => {
 
     const dispatch = useDispatch()
 
@@ -26,10 +28,13 @@ const Tracklist: React.FC<PropsType> = ({tracks, containsMySavedTracks = []}) =>
                 <th style={{width: "10%"}} key={i}>
                     <span>preview</span>
                 </th>),
-            render: (d: SpotifyApi.SavedTrackObject, i, _, contains) => (
+            render: (d: SpotifyApi.SavedTrackObject, i, dataIndex, isSaved) => (
                 <td style={{width: "10%"}} key={i}>
                     <button onClick={() => playTrack(d.track.id)}>Play</button>
-                    <div>{contains ? "yes" : "no"}</div>
+                    <LikeButton value={isSaved}
+                                trackId={d.track.id}
+                                dataIndex={dataIndex}
+                                onChange={toggleFromYourSavedTracks}/>
                 </td>)
         },
         {

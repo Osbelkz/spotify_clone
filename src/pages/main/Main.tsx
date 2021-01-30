@@ -4,7 +4,7 @@ import { getMyInfo } from '../../store/home-reducer';
 import Layout from "../../components/layout/Layout";
 import {Route, Switch } from 'react-router-dom';
 import RecentlyPlayed from "./yourLibrary/recentlyPlayed/RecentlyPlayed";
-import LikedTracks from "./yourLibrary/LikedTracks/LikedTracks";
+import LikeButton from "./yourLibrary/LikedTracks/LikedTracks";
 import ArtistContainer from "./artist/ArtistContainer";
 import AlbumContainer from "./album/AlbumContainer";
 import PlaylistContainer from "./playlist/PlaylistContainer";
@@ -30,7 +30,7 @@ const Main:React.FC = ({}) => {
                 <Route path={"/playlist/:id"} component={PlaylistContainer}/>
                 <Route path={"/artist/:id"} component={ArtistContainer}/>
                 <Route path={"/recently-played"} component={RecentlyPlayed} />
-                <Route path={"/liked-songs"} component={LikedTracks} />
+                <Route path={"/liked-songs"} component={LikeButton} />
                 <Route path={"/artists"} component={MyTopArtists} />
             </Switch>
         </Layout>

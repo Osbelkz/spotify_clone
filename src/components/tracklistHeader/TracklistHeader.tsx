@@ -9,9 +9,10 @@ type PropsType = {
     name: string
     type: string
     followers?: number
+    setPlayerQueueHandler: () => void
 }
 
-const TracklistHeader: React.FC<PropsType> = ({imageUrl, type, name, followers, children}) => {
+const TracklistHeader: React.FC<PropsType> = React.memo(({imageUrl, type, name, followers, setPlayerQueueHandler, children}) => {
 
     return (
         <header className={classes.banner}>
@@ -25,7 +26,7 @@ const TracklistHeader: React.FC<PropsType> = ({imageUrl, type, name, followers, 
                         <h1 className={classes.name}>{name}</h1>
                         <p className={classes.description}>{children}</p>
                         <div className={classes.buttons}>
-                            <Button btnType={"green"}>Play</Button>
+                            <Button btnType={"green"} onClick={setPlayerQueueHandler}>Play</Button>
                             <Button>follow</Button>
                         </div>
                     </div>
@@ -39,6 +40,6 @@ const TracklistHeader: React.FC<PropsType> = ({imageUrl, type, name, followers, 
             </div>
         </header>
     );
-};
+});
 
 export default TracklistHeader;

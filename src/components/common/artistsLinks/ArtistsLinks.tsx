@@ -8,7 +8,7 @@ type PropsType = {
 }
 
 
-const ArtistsLinks: React.FC<PropsType> = ({artists}) => {
+const ArtistsLinks: React.FC<PropsType> = React.memo(({artists}) => {
     return (
         <>
             {artists.map((artist, index, arr) => (
@@ -18,6 +18,6 @@ const ArtistsLinks: React.FC<PropsType> = ({artists}) => {
             ))}
         </>
     );
-};
+});
 
 export default ArtistsLinks;

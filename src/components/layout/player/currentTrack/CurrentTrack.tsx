@@ -10,7 +10,7 @@ type PropsType = {
     albumUrl: string
 }
 
-const MyComponent: React.FC<PropsType> = ({name, artists, thumbnail, albumUrl}) => {
+const MyComponent: React.FC<PropsType> = React.memo(({name, artists, thumbnail, albumUrl}) => {
     return (
         <div className={classes.currentTrack}>
             <Link to={{pathname: `/album/${albumUrl}`}}><img className={classes.trackImage} src={thumbnail} alt=""/></Link>
@@ -23,6 +23,6 @@ const MyComponent: React.FC<PropsType> = ({name, artists, thumbnail, albumUrl}) 
         </div>
 
     );
-};
+});
 
 export default MyComponent;

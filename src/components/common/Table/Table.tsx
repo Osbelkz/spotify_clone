@@ -3,17 +3,17 @@ import classes from "./Table.module.scss";
 
 export interface ITableModel {
     title: (index: number) => JSX.Element
-    render: (dataItem: any, modelIndex: number, dataIndex: number, contains?: boolean) => JSX.Element
+    render: (dataItem: any, modelIndex: number, dataIndex: number, saved: boolean) => JSX.Element
 }
 
 interface ITableProps {
     model: ITableModel[]
     data: any
     disabled?: boolean
-    contains?: boolean[]
+    contains: boolean[]
 }
 
-const Table: React.FC<ITableProps> = React.memo(({model, data, contains = [], disabled = false}) => {
+const Table: React.FC<ITableProps> = React.memo(({model, data, contains, disabled = false}) => {
 
     console.log(contains)
 
@@ -26,7 +26,7 @@ const Table: React.FC<ITableProps> = React.memo(({model, data, contains = [], di
             </thead>
             <tbody>
             {data.map((dataItem: any, dataIndex: number) => (
-                <tr className={classes.data} key={dataItem._id}>
+                <tr className={classes.data} key={dataIndex}>
                     {model.map((m, modelIndex) => m.render(dataItem, modelIndex, dataIndex, contains[dataIndex]))}
                 </tr>
             ))}

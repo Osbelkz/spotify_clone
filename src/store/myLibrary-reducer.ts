@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {spotifyWebApi} from "../api/spotify-web-api";
 import {getArrContainInMySavedTracks} from "../helpers/helpers";
+import {toggleFromYourSavedTracksPlaylist} from "./playlist-reducer";
 
 const initialState = {
     myRecentlyPlayedTracks: {
@@ -38,6 +39,28 @@ export const getMyTopArtists = createAsyncThunk("getMyTopArtists", async (arg, t
     return result.body.items
 })
 
+export const toggleFromYourSavedTracksRecentlyPlayed = createAsyncThunk
+("toggleFromYourSavedTracksRecentlyPlayed", async ({trackId, value, index}: {trackId: string, value: boolean, index: number}, thunkAPI) => {
+    if (value) {
+        let result = await spotifyWebApi.removeFromMySavedTracks([trackId])
+    } else {
+        let result = await spotifyWebApi.addToMySavedTracks([trackId])
+    }
+    return {index: index}
+})
+
+export const toggleFromYourSavedTracks = createAsyncThunk
+("toggleFromYourSavedTracks", async ({trackId, value, index}: {trackId: string, value: boolean, index: number}, thunkAPI) => {
+    if (value) {
+        let result = await spotifyWebApi.removeFromMySavedTracks([trackId])
+    } else {
+        let result = await spotifyWebApi.addToMySavedTracks([trackId])
+    }
+    return {index: index}
+})
+
+
+
 export const myLibrarySlice = createSlice({
     name: "myLibrary",
     initialState: initialState,
@@ -45,13 +68,21 @@ export const myLibrarySlice = createSlice({
     extraReducers: builder => (
         builder
             .addCase(getMyRecentlyPlayedTracks.fulfilled, (state, action) => {
-                Object.assign(state.myRecentlyPlayedTracks, action.payload)
+                state.myRecentlyPlayedTracks.tracks = action.payload.tracks
+                state.myRecentlyPlayedTracks.containsMySavedTracks = action.payload.containsMySavedTracks
             })
             .addCase(getMySavedTracks.fulfilled, (state, action) => {
-                Object.assign(state.mySavedTracks, action.payload)
+                state.mySavedTracks.tracks = action.payload.tracks
+                state.mySavedTracks.containsMySavedTracks = action.payload.containsMySavedTracks
             })
             .addCase(getMyTopArtists.fulfilled, (state, action) => {
                 state.myTopArtists = action.payload
+            })
+            .addCase(toggleFromYourSavedTracksRecentlyPlayed.fulfilled, (state, action) => {
+                state.myRecentlyPlayedTracks.containsMySavedTracks[action.payload.index] = !state.myRecentlyPlayedTracks.containsMySavedTracks[action.payload.index]
+            })
+            .addCase(toggleFromYourSavedTracks.fulfilled, (state, action) => {
+                state.mySavedTracks.containsMySavedTracks[action.payload.index] = !state.mySavedTracks.containsMySavedTracks[action.payload.index]
             })
     )
 })

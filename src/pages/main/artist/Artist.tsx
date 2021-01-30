@@ -15,7 +15,6 @@ type PropsType = {
 
 const Artist: React.FC<PropsType> = ({artist, albums, popularTracks, containsMySavedTracks, relatedArtists}) => {
 
-
     return (
         <div className={classes.artist}>
             <header className={classes.banner}>

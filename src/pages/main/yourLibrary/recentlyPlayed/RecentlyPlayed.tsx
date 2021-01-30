@@ -1,10 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../../store/store";
 import Tracklist from "../../../../components/common/tracklist/Tracklist";
-import { getMyRecentlyPlayedTracks } from '../../../../store/myLibrary-reducer';
+import {getMyRecentlyPlayedTracks, toggleFromYourSavedTracksRecentlyPlayed} from '../../../../store/myLibrary-reducer';
 import classes from "./RecentlyPlayed.module.scss";
-
 
 const RecentlyPlayed = () => {
 
@@ -18,9 +17,15 @@ const RecentlyPlayed = () => {
         dispatch(getMyRecentlyPlayedTracks())
     }, [])
 
+    const toggleFromYourSavedTracks = useCallback((trackId: string, value: boolean, index: number) => {
+        dispatch(toggleFromYourSavedTracksRecentlyPlayed({trackId, value, index}))
+    }, [])
+
     return (
         <div className={classes.recentlyPlayed}>
-            <Tracklist tracks={myRecentlyPlayedTracks} containsMySavedTracks={containsMySavedTracks} />
+            <Tracklist tracks={myRecentlyPlayedTracks}
+                       toggleFromYourSavedTracks={toggleFromYourSavedTracks}
+                       containsMySavedTracks={containsMySavedTracks} />
         </div>
     );
 };

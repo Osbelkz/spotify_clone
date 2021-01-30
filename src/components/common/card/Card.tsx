@@ -10,7 +10,7 @@ type PropsType = {
     description: string | JSX.Element | null
 }
 
-const Card: React.FC<PropsType> = ({link, name, description, imageSrc}) => {
+const Card: React.FC<PropsType> = React.memo(({link, name, description, imageSrc}) => {
 
     return (
         <div className={classes.card}>
@@ -27,6 +27,6 @@ const Card: React.FC<PropsType> = ({link, name, description, imageSrc}) => {
             </p>
         </div>
     );
-};
+});
 
 export default Card;

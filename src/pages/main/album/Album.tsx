@@ -1,19 +1,21 @@
 import React, {useMemo} from 'react';
-
 import Table, {ITableModel} from "../../../components/common/Table/Table";
 import {convertToMMSS} from "../../../helpers/helpers";
 import ArtistsLinks from "../../../components/common/artistsLinks/ArtistsLinks";
 import TracklistHeader from "../../../components/tracklistHeader/TracklistHeader";
+import LikeButton from "../../../components/common/likeButton/LikeButton";
 
 
 type PropsType = {
     playTrack: (trackId: string) => void
     album: SpotifyApi.SingleAlbumResponse
     containsMySavedTracks: boolean[]
+    toggleFromYourSavedTracks: (trackId: string, value: boolean, index: number) => void
+    setPlayerQueueHandler: () => void
 }
 
 
-const Album: React.FC<PropsType> = ({playTrack, album, containsMySavedTracks}) => {
+const Album: React.FC<PropsType> = ({playTrack, album, containsMySavedTracks, setPlayerQueueHandler,  toggleFromYourSavedTracks}) => {
 
     const testModel: ITableModel[] = useMemo(() => ([
         {
@@ -21,10 +23,13 @@ const Album: React.FC<PropsType> = ({playTrack, album, containsMySavedTracks}) =
                 <th style={{width: "10%"}} key={i}>
                     <span>preview</span>
                 </th>),
-            render: (d: SpotifyApi.TrackObjectSimplified, i, _, contains) => (
+            render: (d: SpotifyApi.TrackObjectSimplified, i, dataIndex, isSaved) => (
                 <td style={{width: "10%"}} key={i}>
                     <button onClick={() => playTrack(d.id)}>Play</button>
-                    <div>{contains ? "yes" : "no"}</div>
+                    <LikeButton value={isSaved}
+                                trackId={d.id}
+                                dataIndex={dataIndex}
+                                onChange={toggleFromYourSavedTracks}/>
                 </td>)
         },
         {
@@ -64,6 +69,7 @@ const Album: React.FC<PropsType> = ({playTrack, album, containsMySavedTracks}) =
         <div>
             <TracklistHeader imageUrl={album.images[0].url}
                              type={album.type}
+                             setPlayerQueueHandler={setPlayerQueueHandler}
                              name={album.name}>
                 <ArtistsLinks artists={album.artists} />
             </TracklistHeader>

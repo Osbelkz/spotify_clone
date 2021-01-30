@@ -1,9 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../../store/store";
 import Tracklist from "../../../../components/common/tracklist/Tracklist";
-import {getMySavedTracks} from '../../../../store/myLibrary-reducer';
+import {getMySavedTracks, toggleFromYourSavedTracks} from '../../../../store/myLibrary-reducer';
 import classes from './LikedTracks.module.scss';
+import TracklistHeader from "../../../../components/tracklistHeader/TracklistHeader";
 
 const LikedTracks = () => {
 
@@ -15,9 +16,25 @@ const LikedTracks = () => {
         dispatch(getMySavedTracks())
     }, [])
 
+    const toggleFromYourSavedTracks_ = useCallback((trackId: string, value: boolean, index: number) => {
+        dispatch(toggleFromYourSavedTracks({trackId, value, index}))
+    }, [])
+
+    const playTracklist = useCallback((trackId: string, value: boolean, index: number) => {
+        mySavedTracks.map(track => track.track.id)
+        dispatch(toggleFromYourSavedTracks({trackId, value, index}))
+    }, [])
+
     return (
         <div className={classes.likedTracks}>
-            <Tracklist tracks={mySavedTracks} containsMySavedTracks={containsMySavedTracks}/>
+            <TracklistHeader imageUrl={""}
+                             name={"LikedTracks"}
+                             type={"playlist"}
+                             setPlayerQueueHandler={() => {}}
+            />
+            <Tracklist tracks={mySavedTracks}
+                       toggleFromYourSavedTracks={toggleFromYourSavedTracks_}
+                       containsMySavedTracks={containsMySavedTracks}/>
         </div>
     );
 };

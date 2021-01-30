@@ -1,10 +1,9 @@
-import React, {useEffect} from 'react';
-import Album from "../album/Album";
+import React, {useCallback, useEffect} from 'react';
 import Playlist from "./Playlist";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../store/store";
-import {getPlaylist} from "../../../store/playlist-reducer";
+import {getPlaylist, toggleFromYourSavedTracksPlaylist} from "../../../store/playlist-reducer";
 
 const PlaylistContainer = () => {
 
@@ -21,11 +20,17 @@ const PlaylistContainer = () => {
     }, [id])
 
 
+    const toggleFromYourSavedTracks = useCallback((trackId: string, value: boolean, index: number) => {
+        dispatch(toggleFromYourSavedTracksPlaylist({trackId, value, index}))
+    }, [dispatch])
+
+
     return (
         <>
             {
                 (id === playlist?.id)
                     ? <Playlist playlist={playlist}
+                                toggleFromYourSavedTracks={toggleFromYourSavedTracks}
                                 containsMySavedTracks={containsMySavedTracks}
                     />
                     : <div style={{color: "white"}}>Loading</div>

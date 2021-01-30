@@ -2,8 +2,8 @@ import React, {useCallback, useEffect} from 'react';
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../store/store";
-import {getAlbum} from "../../../store/album-reducer";
-import {getTrack} from "../../../store/player-reducer";
+import {getAlbum, toggleFromYourSavedTracksAlbum} from "../../../store/album-reducer";
+import {getTrack, setPlayerQueue} from "../../../store/player-reducer";
 import Album from "./Album";
 
 const AlbumContainer = () => {
@@ -22,7 +22,18 @@ const AlbumContainer = () => {
 
     const playTrack = useCallback((trackId: string) => {
         dispatch(getTrack({trackId}))
-    }, [])
+    }, [dispatch])
+
+    const toggleFromYourSavedTracks = useCallback((trackId: string, value: boolean, index: number) => {
+        dispatch(toggleFromYourSavedTracksAlbum({trackId, value, index}))
+    }, [dispatch])
+
+    const setPlayerQueueHandler = useCallback(() => {
+        if (album) {
+            const queue = album.tracks.items.map(track => track.id)
+            dispatch(setPlayerQueue(queue))
+        }
+    }, [dispatch, album])
 
 
     return (
@@ -31,7 +42,10 @@ const AlbumContainer = () => {
                 (id === album?.id)
                     ? <Album album={album}
                              containsMySavedTracks={containsMySavedTracks}
-                             playTrack={playTrack}/>
+                             playTrack={playTrack}
+                             toggleFromYourSavedTracks={toggleFromYourSavedTracks}
+                             setPlayerQueueHandler={setPlayerQueueHandler}
+                    />
                     : <div style={{color: "white"}}>Loading</div>
             }
         </>
