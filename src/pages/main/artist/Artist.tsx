@@ -1,9 +1,9 @@
 import React from 'react';
 import classes from './Artist.module.scss';
 import PopularTracks from "../../../components/artist/popularTracks/PopularTracks";
-import Cards from "../../../components/common/cards/Cards";
 import {Button} from "../../../components/common/button/Button";
 import Image from "../../../components/common/image/Image";
+import AlbumCards from "../../../components/common/cards/AlbumCards";
 
 type PropsType = {
     artist: SpotifyApi.SingleArtistResponse
@@ -22,7 +22,7 @@ const Artist: React.FC<PropsType> = ({artist, albums, popularTracks, containsMyS
                     <div className={classes.profileRow}>
                         <Image className={classes.mainImage}
                                src={artist.images[1].url}
-                               alt={""}/>
+                               alt={artist.name}/>
                         <div className={classes.info}>
                             <p className={classes.title}>Artist</p>
                             <h1 className={classes.name}>{artist.name}</h1>
@@ -44,7 +44,7 @@ const Artist: React.FC<PropsType> = ({artist, albums, popularTracks, containsMyS
                 <PopularTracks tracks={popularTracks} containsMySavedTracks={containsMySavedTracks}/>
                 <div className={classes.artistAlbumsWrapper}>
                     <h3 className={classes.title}>Albums</h3>
-                    <Cards cards={albums} type={"album"}/>
+                    <AlbumCards cards={albums}/>
                 </div>
             </div>
 

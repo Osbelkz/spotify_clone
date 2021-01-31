@@ -14,11 +14,11 @@ const AlbumContainer = () => {
     const album = useSelector<AppRootStateType, SpotifyApi.SingleAlbumResponse | null>(state => state.album.album)
     const containsMySavedTracks = useSelector<AppRootStateType, boolean[]>(state => state.album.containsMySavedTracks)
 
-    console.log("album page", album)
+    // console.log("album page", album)
 
     useEffect(() => {
         dispatch(getAlbum({id}))
-    }, [id])
+    }, [id, dispatch])
 
     const playTrack = useCallback((trackId: string) => {
         dispatch(getTrack({trackId}))

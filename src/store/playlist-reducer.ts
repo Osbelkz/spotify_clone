@@ -34,7 +34,8 @@ export const playlistSlice = createSlice({
     extraReducers: builder => (
         builder
             .addCase(getPlaylist.fulfilled, (state, action) => {
-                Object.assign(state, action.payload)
+                state.playlist = action.payload.playlist
+                state.containsMySavedTracks = action.payload.containsMySavedTracks
             })
             .addCase(toggleFromYourSavedTracksPlaylist.fulfilled, (state, action) => {
                 state.containsMySavedTracks[action.payload.index] = !state.containsMySavedTracks[action.payload.index]

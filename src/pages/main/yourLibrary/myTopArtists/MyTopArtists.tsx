@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../../store/store";
 import {getMyTopArtists} from "../../../../store/myLibrary-reducer";
-import ArtistCard from '../../../../components/common/artistCard/ArtistCard';
+import ArtistCard from '../../../../components/common/card/ArtistCard';
 import classes from "./MyTopArtists.module.scss";
 
 const MyTopArtists = () => {
@@ -12,7 +12,7 @@ const MyTopArtists = () => {
 
     useEffect(() => {
         dispatch(getMyTopArtists())
-    }, [])
+    }, [dispatch])
 
 
     return (
@@ -21,6 +21,7 @@ const MyTopArtists = () => {
             <div className={classes.artistsCards}>
                 {myTopArtists.map(artist => (
                     <ArtistCard
+                        key={artist.id}
                         imageUrl={artist.images[1].url}
                         link={artist.id}
                         name={artist.name}

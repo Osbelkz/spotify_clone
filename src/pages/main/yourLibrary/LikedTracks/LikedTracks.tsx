@@ -4,7 +4,7 @@ import {AppRootStateType} from "../../../../store/store";
 import Tracklist from "../../../../components/common/tracklist/Tracklist";
 import {getMySavedTracks, toggleFromYourSavedTracks} from '../../../../store/myLibrary-reducer';
 import classes from './LikedTracks.module.scss';
-import TracklistHeader from "../../../../components/tracklistHeader/TracklistHeader";
+import TracklistHeader from "../../../../components/common/tracklist/TracklistHeader";
 
 const LikedTracks = () => {
 
@@ -14,16 +14,16 @@ const LikedTracks = () => {
 
     useEffect(() => {
         dispatch(getMySavedTracks())
-    }, [])
+    }, [dispatch])
 
     const toggleFromYourSavedTracks_ = useCallback((trackId: string, value: boolean, index: number) => {
         dispatch(toggleFromYourSavedTracks({trackId, value, index}))
-    }, [])
+    }, [dispatch])
 
     const playTracklist = useCallback((trackId: string, value: boolean, index: number) => {
         mySavedTracks.map(track => track.track.id)
         dispatch(toggleFromYourSavedTracks({trackId, value, index}))
-    }, [])
+    }, [dispatch, mySavedTracks])
 
     return (
         <div className={classes.likedTracks}>

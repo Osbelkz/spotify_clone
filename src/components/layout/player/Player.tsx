@@ -25,7 +25,7 @@ const Player: React.FC = () => {
 
     useEffect(() => {
         dispatch(getTrack({trackId:queue[trackNumber]}))
-    }, [queue, trackNumber])
+    }, [queue, trackNumber, dispatch])
 
     useEffect(() => {
         setInterval(() => {
@@ -44,7 +44,7 @@ const Player: React.FC = () => {
         if (audioRef && audioRef.current && audioRef.current.ended) {
             dispatch(getTrack({trackId: queue[trackNumber+1]}))
         }
-    }, [currentTrack, queue, trackNumber])
+    }, [currentTrack, queue, trackNumber, dispatch])
 
     useEffect(() => {
         audioRef && audioRef.current && audioRef.current.play()

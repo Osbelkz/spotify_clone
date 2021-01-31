@@ -15,7 +15,7 @@ interface ITableProps {
 
 const Table: React.FC<ITableProps> = React.memo(({model, data, contains, disabled = false}) => {
 
-    console.log(contains)
+    // console.log(contains)
 
     return (
         <table className={`${classes.table} ${disabled ? classes.table__loading : ""}`}>

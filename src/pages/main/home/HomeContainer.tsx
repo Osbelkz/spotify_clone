@@ -16,7 +16,7 @@ const HomeContainer = () => {
             dispatch(getFeaturedPlaylists())
             dispatch(getNewReleases())
         }
-    }, [])
+    }, [dispatch, featuredPlaylists, newReleases])
 
 
 

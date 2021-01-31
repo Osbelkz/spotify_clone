@@ -17,7 +17,7 @@ const PlaylistContainer = () => {
 
     useEffect(() => {
         dispatch(getPlaylist({id}))
-    }, [id])
+    }, [id, dispatch])
 
 
     const toggleFromYourSavedTracks = useCallback((trackId: string, value: boolean, index: number) => {

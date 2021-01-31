@@ -35,7 +35,8 @@ export const albumSlice = createSlice({
     extraReducers: builder => (
         builder
             .addCase(getAlbum.fulfilled, (state, action) => {
-                Object.assign(state, action.payload)
+                state.album = action.payload.album
+                state.containsMySavedTracks = action.payload.containsMySavedTracks
             })
             .addCase(toggleFromYourSavedTracksAlbum.fulfilled, (state, action) => {
                 state.containsMySavedTracks[action.payload.index] = !state.containsMySavedTracks[action.payload.index]

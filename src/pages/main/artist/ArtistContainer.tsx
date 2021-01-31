@@ -21,7 +21,7 @@ const ArtistContainer = () => {
 
     useEffect(() => {
         dispatch(getArtist({id}))
-    }, [id])
+    }, [id, dispatch])
 
 
     return (

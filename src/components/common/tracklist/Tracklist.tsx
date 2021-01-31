@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import Table, {ITableModel} from "../Table/Table";
 import {convertToMMSS} from "../../../helpers/helpers";
 import {useDispatch} from "react-redux";
@@ -17,10 +17,10 @@ const Tracklist: React.FC<PropsType> = ({tracks, containsMySavedTracks, toggleFr
 
     const dispatch = useDispatch()
 
-    const playTrack = (trackId: string) => {
+    const playTrack = useCallback((trackId: string) => {
         dispatch(getTrack({trackId}))
-    }
-    console.log("tracklist", tracks)
+    }, [dispatch])
+    // console.log("tracklist", tracks)
 
     const testModel: ITableModel[] = useMemo(() => ([
         {
@@ -78,7 +78,7 @@ const Tracklist: React.FC<PropsType> = ({tracks, containsMySavedTracks, toggleFr
                 </td>)
         },
 
-    ]), [])
+    ]), [playTrack, toggleFromYourSavedTracks])
 
 
     return (

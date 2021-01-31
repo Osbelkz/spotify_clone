@@ -38,7 +38,11 @@ export const artistSlice = createSlice({
     extraReducers: builder => (
         builder
             .addCase(getArtist.fulfilled, (state, action) => {
-                Object.assign(state, action.payload)
+                state.artist = action.payload.artist
+                state.popularTracks = action.payload.popularTracks
+                state.albums = action.payload.albums
+                state.relatedArtists = action.payload.relatedArtists
+                state.containsMySavedTracks = action.payload.containsMySavedTracks
             })
     )
 })

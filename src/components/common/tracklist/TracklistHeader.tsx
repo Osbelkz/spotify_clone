@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from "./TracklistHeader.module.scss";
-import Image from "../common/image/Image";
-import {Button} from "../common/button/Button";
+import Image from "../image/Image";
+import {Button} from "../button/Button";
 
 
 type PropsType = {
@@ -20,7 +20,7 @@ const TracklistHeader: React.FC<PropsType> = React.memo(({imageUrl, type, name, 
                 <div className={classes.profileRow}>
                     <Image className={classes.mainImage}
                            src={imageUrl}
-                           alt=""/>
+                           alt={name}/>
                     <div className={classes.info}>
                         <p className={classes.title}>{type}</p>
                         <h1 className={classes.name}>{name}</h1>

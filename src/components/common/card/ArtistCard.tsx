@@ -15,7 +15,7 @@ const ArtistCard: React.FC<PropsType> = React.memo(({imageUrl, link, name}) => {
             <div className={classes.imageWrapper}>
                 <Link to={{pathname: "artist/" + link}}>
                     <Image className={classes.artistImage}
-                           src={imageUrl} alt=""/>
+                           src={imageUrl} alt={name}/>
                 </Link>
             </div>
             <p className={classes.name}>{name}</p>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Tracklist from "../../../components/common/tracklist/Tracklist";
 import classes from "./Playlist.module.scss"
-import TracklistHeader from "../../../components/tracklistHeader/TracklistHeader";
+import TracklistHeader from "../../../components/common/tracklist/TracklistHeader";
 
 type PropsType = {
     playlist: SpotifyApi.SinglePlaylistResponse

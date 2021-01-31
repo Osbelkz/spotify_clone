@@ -15,11 +15,11 @@ const RecentlyPlayed = () => {
 
     useEffect(() => {
         dispatch(getMyRecentlyPlayedTracks())
-    }, [])
+    }, [dispatch])
 
     const toggleFromYourSavedTracks = useCallback((trackId: string, value: boolean, index: number) => {
         dispatch(toggleFromYourSavedTracksRecentlyPlayed({trackId, value, index}))
-    }, [])
+    }, [dispatch])
 
     return (
         <div className={classes.recentlyPlayed}>

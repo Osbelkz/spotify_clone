@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './Home.module.scss';
-import Cards from "../../../components/common/cards/Cards";
+import PlaylistCards from "../../../components/common/cards/PlaylistCards";
+import AlbumCards from "../../../components/common/cards/AlbumCards";
 
 type PropsType = {
     featuredPlaylists: SpotifyApi.PlaylistObjectSimplified[]
@@ -16,13 +17,13 @@ const Home: React.FC<PropsType> = ({newReleases, featuredPlaylists, isLoading}) 
             <div className={classes.featuredPlaylists}>
                 <h2 className={classes.title}>Featured Playlists</h2>
                 <div>
-                    <Cards cards={featuredPlaylists} type={"playlist"} isLoading={isLoading} />
+                    <PlaylistCards cards={featuredPlaylists} isLoading={isLoading} />
                 </div>
             </div>
             <div className={classes.newReleases}>
                 <h2 className={classes.title}>New Releases</h2>
                 <div>
-                    <Cards cards={newReleases} type={"album"} isLoading={isLoading} />
+                    <AlbumCards cards={newReleases} isLoading={isLoading} />
                 </div>
             </div>
         </div>

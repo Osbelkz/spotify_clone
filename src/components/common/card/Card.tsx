@@ -7,23 +7,22 @@ type PropsType = {
     imageSrc: string,
     link: string,
     name: string,
-    description: string | JSX.Element | null
 }
 
-const Card: React.FC<PropsType> = React.memo(({link, name, description, imageSrc}) => {
+const Card: React.FC<PropsType> = React.memo(({link, name, imageSrc, children}) => {
 
     return (
         <div className={classes.card}>
             <Link to={{pathname: link}}>
                 <div className={classes.imageWrapper}>
                     <Image className={classes.hover}
-                         src={imageSrc} alt=""/>
+                         src={imageSrc} alt={name}/>
                 </div>
             </Link>
 
             <p className={classes.name}>{name}</p>
             <p className={classes.description}>
-                {description}
+                {children}
             </p>
         </div>
     );

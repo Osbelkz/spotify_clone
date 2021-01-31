@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import Table, {ITableModel} from "../../../components/common/Table/Table";
 import {convertToMMSS} from "../../../helpers/helpers";
 import ArtistsLinks from "../../../components/common/artistsLinks/ArtistsLinks";
-import TracklistHeader from "../../../components/tracklistHeader/TracklistHeader";
+import TracklistHeader from "../../../components/common/tracklist/TracklistHeader";
 import LikeButton from "../../../components/common/likeButton/LikeButton";
 
 
@@ -63,7 +63,7 @@ const Album: React.FC<PropsType> = ({playTrack, album, containsMySavedTracks, se
                 </td>)
         },
 
-    ]), [])
+    ]), [playTrack, toggleFromYourSavedTracks])
 
     return (
         <div>

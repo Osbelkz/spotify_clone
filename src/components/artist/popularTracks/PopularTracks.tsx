@@ -20,7 +20,7 @@ const PopularTracks: React.FC<PropsType> = ({tracks, containsMySavedTracks}) => 
 
     const playTrack = useCallback((trackId: string) => {
         dispatch(getTrack({trackId}))
-    }, [])
+    }, [dispatch])
 
     const testModel: ITableModel[] = useMemo(() => ([
         {
@@ -59,7 +59,7 @@ const PopularTracks: React.FC<PropsType> = ({tracks, containsMySavedTracks}) => 
                 </td>)
         },
 
-    ]), [])
+    ]), [playTrack])
 
     return (
         <div className={classes.popularTracks}>
