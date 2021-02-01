@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {spotifyWebApi} from "../api/spotify-web-api";
-import { getArrContainInMySavedTracks } from "../helpers/helpers";
+import {getArrContainInMySavedTracks} from "../helpers/helpers";
 
 const initialState = {
     playlist: null as SpotifyApi.SinglePlaylistResponse | null,
@@ -18,7 +18,7 @@ export const getPlaylist = createAsyncThunk
 })
 
 export const toggleFromYourSavedTracksPlaylist = createAsyncThunk
-("toggleFromYourSavedTracksPlaylist", async ({trackId, value, index}: {trackId: string, value: boolean, index: number}, thunkAPI) => {
+("toggleFromYourSavedTracksPlaylist", async ({trackId, value, index}: { trackId: string, value: boolean, index: number }, thunkAPI) => {
     if (value) {
         let result = await spotifyWebApi.removeFromMySavedTracks([trackId])
     } else {

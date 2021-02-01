@@ -4,14 +4,12 @@ import classes from "./Player.module.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../store/store";
 import CurrentTrack from './currentTrack/CurrentTrack';
-import playBtnSvg from "../../../assets/UI/player/Play.svg"
-import pauseBtnSvg from "../../../assets/UI/player/pause_icon.svg"
-import prevBtnSvg from "../../../assets/UI/player/prev.svg"
-import nextBtnSvg from "../../../assets/UI/player/next_icon.png"
-import {convertToMMSS} from '../../../helpers/helpers';
 import {getTrack} from "../../../store/player-reducer";
+import ControlButtons from "./ControlButtons";
+import TrackProgress from "./TrackProgress";
+import ExtendedControls from "./ExtendedControls";
 
-const Player: React.FC = () => {
+const Player: React.FC = React.memo(() => {
 
     const dispatch = useDispatch()
     const currentTrack = useSelector<AppRootStateType, SpotifyApi.SingleTrackResponse | null>(state => state.player.currentTrack)
@@ -24,7 +22,7 @@ const Player: React.FC = () => {
     const [trackNumber, setTrackNumber] = useState(0)
 
     useEffect(() => {
-        dispatch(getTrack({trackId:queue[trackNumber]}))
+        dispatch(getTrack({trackId: queue[trackNumber]}))
     }, [queue, trackNumber, dispatch])
 
     useEffect(() => {
@@ -42,7 +40,7 @@ const Player: React.FC = () => {
 
     useEffect(() => {
         if (audioRef && audioRef.current && audioRef.current.ended) {
-            dispatch(getTrack({trackId: queue[trackNumber+1]}))
+            dispatch(getTrack({trackId: queue[trackNumber + 1]}))
         }
     }, [currentTrack, queue, trackNumber, dispatch])
 
@@ -52,75 +50,40 @@ const Player: React.FC = () => {
 
     const play = () => audioRef && audioRef.current && audioRef.current.play();
     const pause = () => audioRef && audioRef.current && audioRef.current.pause();
-    const nextTrack = () => setTrackNumber(num => num+1)
-    const prevTrack = () => {
-        setTrackNumber(num => num - 1)
+    const nextTrack = () => setTrackNumber(num => num + 1)
+    const prevTrack = () => setTrackNumber(num => num - 1)
+    const changeTrackProgress = (currentTime: number) => {
+        if (audioRef && audioRef.current) {
+            audioRef.current.currentTime = currentTime
+        }
     }
-
+    const changeVolume = (value: number) => {
+        if (audioRef && audioRef.current) {
+            audioRef.current.volume = value
+        }
+    }
 
     return (
         <div className={classes.player}>
-
+            <audio
+                src={currentTrack?.preview_url ? currentTrack?.preview_url : ""}
+                controls={false}
+                ref={audioRef}
+            />
             {currentTrack
                 ? <CurrentTrack name={currentTrack.name}
                                 albumUrl={currentTrack.album.id}
                                 artists={currentTrack.artists}
                                 thumbnail={currentTrack.album.images[2].url}/>
-                : <div style={{minWidth:"25%"}}></div>
+                : <div style={{minWidth: "25%"}}></div>
             }
             <div className={classes.playerControls}>
-                <audio
-                    src={currentTrack?.preview_url ? currentTrack?.preview_url : ""}
-                    controls={false}
-                    ref={audioRef}
-                />
-                <div className={classes.controlButtons}>
-                    <button className={classes.prevTrack} onClick={prevTrack}>
-                        <img src={prevBtnSvg} alt=""/>
-                    </button>
-                    {audioRef.current && audioRef.current.paused
-                        ? <button className={classes.playBtn} onClick={play}>
-                            <img src={playBtnSvg} alt=""/>
-                        </button>
-                        : <button className={classes.pauseBtn} onClick={pause}>
-                            <img src={pauseBtnSvg} alt=""/>
-                        </button>
-                    }
-                    <button className={classes.nextTrack} onClick={nextTrack}>
-                        <img src={nextBtnSvg} alt=""/>
-                    </button>
-                </div>
-                <div className={classes.trackProgress}>
-                    <p className={classes.currentTime}>{convertToMMSS(currentTime)}</p>
-                    <input className={classes.trackLine}
-                           type="range"
-                           step={1}
-                           min={0}
-                           max={Math.floor(duration) | 0}
-                           value={Math.floor(currentTime) | 0}
-                           onChange={(e) => {
-                               if (audioRef && audioRef.current) {
-                                   audioRef.current.currentTime = +e.target.value
-                               }
-                           }}/>
-                    <p className={classes.duration}>{convertToMMSS(duration | 0)} </p>
-                </div>
+                <ControlButtons play={play} pause={pause} next={nextTrack} prev={prevTrack} paused={audioRef?.current?.paused ?? true}/>
+                <TrackProgress duration={duration | 0} progressTime={currentTime | 0} onChange={changeTrackProgress}/>
             </div>
-            <div className={classes.extendedControls}>
-                <input className={classes.trackLine}
-                       type="range"
-                       min={0}
-                       max={1}
-                       step={0.05}
-                       value={audioRef.current ? audioRef.current.volume : 0}
-                       onChange={(e) => {
-                           if (audioRef && audioRef.current) {
-                               audioRef.current.volume = +e.target.value
-                           }
-                       }}/>
-            </div>
+            <ExtendedControls volumeValue={audioRef.current ? audioRef.current.volume : 0} onChange={changeVolume} />
         </div>
     );
-};
+});
 
 export default Player;

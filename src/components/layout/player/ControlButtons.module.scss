@@ -1,0 +1,15 @@
+@import "../../../styles/variables";
+
+.controlButtons {
+  display: flex;
+  align-items: center;
+  .playBtn, .pauseBtn {
+    margin: 0 2.8rem;
+    background-color: transparent;
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+  .prevTrack, .nextTrack {
+    background-color: transparent;
+  }
+}
