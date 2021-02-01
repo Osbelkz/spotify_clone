@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import classes from './Artist.module.scss';
 import PopularTracks from "../../../components/artist/popularTracks/PopularTracks";
 import {Button} from "../../../components/common/button/Button";
 import Image from "../../../components/common/image/Image";
 import AlbumCards from "../../../components/common/cards/AlbumCards";
+import {prettifyNumber} from '../../../helpers/helpers';
+import TracklistHeader from "../../../components/common/tracklist/TracklistHeader";
 
 type PropsType = {
     artist: SpotifyApi.SingleArtistResponse
@@ -15,31 +17,21 @@ type PropsType = {
 
 const Artist: React.FC<PropsType> = ({artist, albums, popularTracks, containsMySavedTracks, relatedArtists}) => {
 
+
+    const setPlayerQueue = useCallback(() => {
+
+    }, [])
+
     return (
         <div className={classes.artist}>
-            <header className={classes.banner}>
-                <div className={classes.profile}>
-                    <div className={classes.profileRow}>
-                        <Image className={classes.mainImage}
-                               src={artist.images[1].url}
-                               alt={artist.name}/>
-                        <div className={classes.info}>
-                            <p className={classes.title}>Artist</p>
-                            <h1 className={classes.name}>{artist.name}</h1>
-                            <div className={classes.buttons}>
-                                <Button btnType={"green"}>Play</Button>
-                                <Button>follow</Button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={classes.followers}>
-                        <span className={classes.text}>Followers</span>
-                        <span className={classes.text}>{artist.followers.total}</span>
-                    </div>
-                </div>
+            <TracklistHeader imageUrl={artist.images[1].url}
+                             name={artist.name}
+                             type={artist.type}
+                             followers={artist.followers.total}
+                             setPlayerQueueHandler={setPlayerQueue}>
 
-                <div className={classes.nav}></div>
-            </header>
+            </TracklistHeader>
+            <div className={classes.nav}></div>
             <div className={classes.content}>
                 <PopularTracks tracks={popularTracks} containsMySavedTracks={containsMySavedTracks}/>
                 <div className={classes.artistAlbumsWrapper}>

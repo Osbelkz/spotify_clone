@@ -8,7 +8,7 @@ type PropsType = {
     isLoading?: boolean
 }
 
-const AlbumCards:React.FC<PropsType> = ({cards, isLoading = false}) => {
+const AlbumCards:React.FC<PropsType> = React.memo(({cards, isLoading = false}) => {
     return (
         <CardsWrapper isLoading={isLoading}>
             {cards.map((album) =>(
@@ -21,6 +21,6 @@ const AlbumCards:React.FC<PropsType> = ({cards, isLoading = false}) => {
                     ))}
         </CardsWrapper>
     );
-};
+});
 
 export default AlbumCards;

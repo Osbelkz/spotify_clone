@@ -2,6 +2,7 @@ import React from 'react';
 import classes from "./TracklistHeader.module.scss";
 import Image from "../image/Image";
 import {Button} from "../button/Button";
+import { prettifyNumber } from '../../../helpers/helpers';
 
 
 type PropsType = {
@@ -34,7 +35,7 @@ const TracklistHeader: React.FC<PropsType> = React.memo(({imageUrl, type, name, 
                 </div>
                 {followers && <div className={classes.followers}>
                     <span className={classes.text}>Followers</span>
-                    <span className={classes.text}>{followers}</span>
+                    <span className={classes.text}>{prettifyNumber(followers)}</span>
                 </div>}
 
             </div>

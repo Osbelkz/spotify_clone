@@ -6,6 +6,7 @@ import {getTrack} from "../../../store/player-reducer";
 import ArtistsLinks from "../artistsLinks/ArtistsLinks";
 import {Link} from "react-router-dom";
 import LikeButton from "../likeButton/LikeButton";
+import PlayCurrentButton from "../PlayCurrentButton/PlayCurrentButton";
 
 type PropsType = {
     tracks: Array<SpotifyApi.SavedTrackObject | SpotifyApi.PlayHistoryObject>
@@ -13,7 +14,7 @@ type PropsType = {
     toggleFromYourSavedTracks: (trackId: string, value: boolean, index: number) => void
 }
 
-const Tracklist: React.FC<PropsType> = ({tracks, containsMySavedTracks, toggleFromYourSavedTracks}) => {
+const Tracklist: React.FC<PropsType> = React.memo(({tracks, containsMySavedTracks, toggleFromYourSavedTracks}) => {
 
     const dispatch = useDispatch()
 
@@ -30,7 +31,7 @@ const Tracklist: React.FC<PropsType> = ({tracks, containsMySavedTracks, toggleFr
                 </th>),
             render: (d: SpotifyApi.SavedTrackObject, i, dataIndex, isSaved) => (
                 <td style={{width: "10%"}} key={i}>
-                    <button onClick={() => playTrack(d.track.id)}>Play</button>
+                    <PlayCurrentButton onClick={playTrack} image={d.track.album.images[0].url} trackId={d.track.id}/>
                     <LikeButton value={isSaved}
                                 trackId={d.track.id}
                                 dataIndex={dataIndex}
@@ -84,6 +85,6 @@ const Tracklist: React.FC<PropsType> = ({tracks, containsMySavedTracks, toggleFr
     return (
         <Table model={testModel} data={tracks} contains={containsMySavedTracks} disabled={false}/>
     );
-};
+});
 
 export default Tracklist;

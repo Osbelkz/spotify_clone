@@ -5,6 +5,7 @@ import {getTrack} from "../../../store/player-reducer";
 import {useDispatch} from "react-redux";
 import {Button} from "../../common/button/Button";
 import classes from "./PopularTracks.module.scss";
+import PlayCurrentButton from "../../common/PlayCurrentButton/PlayCurrentButton";
 
 type PropsType = {
     tracks: SpotifyApi.TrackObjectFull[]
@@ -12,7 +13,7 @@ type PropsType = {
 }
 
 
-const PopularTracks: React.FC<PropsType> = ({tracks, containsMySavedTracks}) => {
+const PopularTracks: React.FC<PropsType> = React.memo(({tracks, containsMySavedTracks}) => {
 
     const [toggle, setToggle] = useState(false)
 
@@ -22,16 +23,21 @@ const PopularTracks: React.FC<PropsType> = ({tracks, containsMySavedTracks}) => 
         dispatch(getTrack({trackId}))
     }, [dispatch])
 
+    const toggleShowTracks = useCallback(() => {
+        setToggle(toggle => !toggle)
+    }, [])
+
+
     const testModel: ITableModel[] = useMemo(() => ([
         {
-            title: (i) => (<th key={i}></th>),
+            title: (i) => (<span key={i}/>),
             render: (d: SpotifyApi.TrackObjectFull, i) => (
                 <td style={{width: "10%"}} key={i}>
-                    <button onClick={() => playTrack(d.id)}>Play</button>
+                    <PlayCurrentButton onClick={playTrack} image={d.album.images[0].url}  trackId={d.id}/>
                 </td>)
         },
         {
-            title: (i) => (<th key={i}></th>),
+            title: (i) => (<span key={i}/>),
             render: (d: SpotifyApi.TrackObjectFull, i, dataIndex, contains) => (
                 <td style={{width: "5%"}} key={i}>
                     <div style={{whiteSpace: "pre-wrap"}}>
@@ -41,7 +47,7 @@ const PopularTracks: React.FC<PropsType> = ({tracks, containsMySavedTracks}) => 
                 </td>)
         },
         {
-            title: (i) => (<th key={i}></th>),
+            title: (i) => (<span key={i}/>),
             render: (d: SpotifyApi.TrackObjectFull, i) => (
                 <td style={{width: "60%"}} key={i}>
                     <div style={{whiteSpace: "pre-wrap"}}>
@@ -50,7 +56,7 @@ const PopularTracks: React.FC<PropsType> = ({tracks, containsMySavedTracks}) => 
                 </td>)
         },
         {
-            title: (i) => (<th key={i}></th>),
+            title: (i) => (<span key={i}/>),
             render: (d: SpotifyApi.TrackObjectFull, i) => (
                 <td style={{width: "30%"}} key={i}>
                     <div style={{whiteSpace: "pre-wrap"}}>
@@ -71,11 +77,11 @@ const PopularTracks: React.FC<PropsType> = ({tracks, containsMySavedTracks}) => 
                     contains={containsMySavedTracks}
                     data={toggle ? tracks : tracks?.slice(0, 5)}/>
             </div>
-            <Button onClick={() => setToggle(!toggle)}>
+            <Button onClick={toggleShowTracks}>
                 {toggle ? `Show 5 less` : `Show 5 more`}
             </Button>
         </div>
     );
-};
+});
 
 export default PopularTracks;

@@ -5,7 +5,7 @@ import {AppRootStateType} from "../../store/store";
 import userIcon from "../../assets/UI/user_icon.svg"
 import arrowDownIcon from "../../assets/UI/arrow_down_icon.svg"
 
-const Header = () => {
+const Header = React.memo(() => {
 
     const username = useSelector<AppRootStateType, string | undefined>(state => state.home.displayName)
 
@@ -18,6 +18,6 @@ const Header = () => {
             </div>
         </header>
     );
-};
+});
 
 export default Header;

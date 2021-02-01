@@ -17,7 +17,7 @@ const ArtistContainer = () => {
     const relatedArtists = useSelector<AppRootStateType, SpotifyApi.ArtistObjectFull[]>(state => state.artist.relatedArtists)
     const containsMySavedTracks = useSelector<AppRootStateType, boolean[]>(state => state.artist.containsMySavedTracks)
 
-    console.log("artist related artists ", relatedArtists)
+    // console.log("artist related artists ", relatedArtists)
 
     useEffect(() => {
         dispatch(getArtist({id}))

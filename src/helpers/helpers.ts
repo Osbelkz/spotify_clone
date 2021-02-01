@@ -23,3 +23,7 @@ export async function getArrContainInMySavedTracks (listId: string[]) {
 
     return flatArr;
 }
+
+export const prettifyNumber = (number: number) => {
+    return String(number).replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1 ')
+}
