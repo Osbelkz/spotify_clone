@@ -1,5 +1,7 @@
 .likeButton {
   background-color: transparent;
+  display: flex;
+  align-items: center;
   .svg {
     fill: #1DB954;
   }

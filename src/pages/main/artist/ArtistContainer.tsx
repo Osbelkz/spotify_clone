@@ -12,12 +12,12 @@ const ArtistContainer = () => {
     let {id} = useParams<{ id: string }>()
 
     const artist = useSelector<AppRootStateType, SpotifyApi.SingleArtistResponse | null>(state => state.artist.artist)
-    const popularTracks = useSelector<AppRootStateType, SpotifyApi.TrackObjectFull[]>(state => state.artist.popularTracks)
     const albums = useSelector<AppRootStateType, SpotifyApi.AlbumObjectSimplified[]>(state => state.artist.albums)
     const relatedArtists = useSelector<AppRootStateType, SpotifyApi.ArtistObjectFull[]>(state => state.artist.relatedArtists)
-    const containsMySavedTracks = useSelector<AppRootStateType, boolean[]>(state => state.artist.containsMySavedTracks)
+    const containsMySavedTracks = useSelector<AppRootStateType, boolean[]>(state => state.tracklists.artistPopularTracks.containsMySavedTracks)
+    const popularTracks = useSelector<AppRootStateType, SpotifyApi.TrackObjectFull[]>(state => state.tracklists.artistPopularTracks.tracks)
 
-    // console.log("artist related artists ", relatedArtists)
+    console.log("artist related artists ", containsMySavedTracks, popularTracks)
 
     useEffect(() => {
         dispatch(getArtist({id}))

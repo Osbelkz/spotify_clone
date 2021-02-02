@@ -3,13 +3,30 @@
 .controlButtons {
   display: flex;
   align-items: center;
+  .prevTrack, .nextTrack, .playBtn, .pauseBtn {
+    background-color: transparent;
+    .svgIcon {
+      fill: $light_l;
+    }
+    &:hover {
+      .svgIcon {
+        fill: $light_xl;
+      }
+    }
+  }
   .playBtn, .pauseBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 2px solid $light_l;
     margin: 0 2.8rem;
-    background-color: transparent;
-    width: 3.2rem;
-    height: 3.2rem;
+    padding: .7rem;
+    &:hover {
+      border-color: $light_xl;
+    }
   }
-  .prevTrack, .nextTrack {
-    background-color: transparent;
-  }
+
+
 }
+

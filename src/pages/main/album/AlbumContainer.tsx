@@ -2,17 +2,17 @@ import React, {useCallback, useEffect} from 'react';
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../store/store";
-import {getAlbum, toggleFromYourSavedTracksAlbum} from "../../../store/album-reducer";
 import {getTrack, setPlayerQueue} from "../../../store/player-reducer";
 import Album from "./Album";
+import { getAlbum, toggleFromYourSavedTracks } from '../../../store/tracklists-reducer';
 
 const AlbumContainer = () => {
 
     let {id} = useParams<{ id: string }>()
 
     const dispatch = useDispatch()
-    const album = useSelector<AppRootStateType, SpotifyApi.SingleAlbumResponse | null>(state => state.album.album)
-    const containsMySavedTracks = useSelector<AppRootStateType, boolean[]>(state => state.album.containsMySavedTracks)
+    const album = useSelector<AppRootStateType, SpotifyApi.SingleAlbumResponse | null>(state => state.tracklists.album.body)
+    const containsMySavedTracks = useSelector<AppRootStateType, boolean[]>(state => state.tracklists.album.containsMySavedTracks)
 
     // console.log("album page", album)
 
@@ -24,8 +24,8 @@ const AlbumContainer = () => {
         dispatch(getTrack({trackId}))
     }, [dispatch])
 
-    const toggleFromYourSavedTracks = useCallback((trackId: string, value: boolean, index: number) => {
-        dispatch(toggleFromYourSavedTracksAlbum({trackId, value, index}))
+    const toggleFromYourSavedTracksHandler = useCallback((trackId: string, value: boolean, index: number) => {
+        dispatch(toggleFromYourSavedTracks({trackId, value, index, tracklistName: "album"}))
     }, [dispatch])
 
     const setPlayerQueueHandler = useCallback(() => {
@@ -43,7 +43,7 @@ const AlbumContainer = () => {
                     ? <Album album={album}
                              containsMySavedTracks={containsMySavedTracks}
                              playTrack={playTrack}
-                             toggleFromYourSavedTracks={toggleFromYourSavedTracks}
+                             toggleFromYourSavedTracks={toggleFromYourSavedTracksHandler}
                              setPlayerQueueHandler={setPlayerQueueHandler}
                     />
                     : <div style={{color: "white"}}>Loading</div>

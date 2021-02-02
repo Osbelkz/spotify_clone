@@ -4,6 +4,7 @@ import {convertToMMSS} from "../../../helpers/helpers";
 import ArtistsLinks from "../../../components/common/artistsLinks/ArtistsLinks";
 import TracklistHeader from "../../../components/common/tracklist/TracklistHeader";
 import LikeButton from "../../../components/common/likeButton/LikeButton";
+import PlayCurrentButton from "../../../components/common/PlayCurrentButton/PlayCurrentButton";
 
 
 type PropsType = {
@@ -19,13 +20,20 @@ const Album: React.FC<PropsType> = ({playTrack, album, containsMySavedTracks, se
 
     const testModel: ITableModel[] = useMemo(() => ([
         {
-            title: (i: number) => (
-                <th style={{width: "10%"}} key={i}>
-                    <span>preview</span>
-                </th>),
+            title: (i) => (
+                <th key={i}/>),
+            render: (d: SpotifyApi.TrackObjectSimplified, i) => (
+                <td style={{padding: "0 20px"}} key={i}>
+                    <PlayCurrentButton onClick={playTrack}
+                                       image={album.images[2].url}
+                                       trackId={d.id}/>
+                </td>)
+        },
+        {
+            title: (i) => (
+                <th key={i}/>),
             render: (d: SpotifyApi.TrackObjectSimplified, i, dataIndex, isSaved) => (
-                <td style={{width: "10%"}} key={i}>
-                    <button onClick={() => playTrack(d.id)}>Play</button>
+                <td style={{padding: "0 20px 0 0"}} key={i}>
                     <LikeButton value={isSaved}
                                 trackId={d.id}
                                 dataIndex={dataIndex}
@@ -34,21 +42,21 @@ const Album: React.FC<PropsType> = ({playTrack, album, containsMySavedTracks, se
         },
         {
             title: (i: number) => (
-                <th style={{width: "30%"}} key={i}>
+                <th style={{width: "50%"}} key={i}>
                     <span>Name</span>
                 </th>),
             render: (d: SpotifyApi.TrackObjectSimplified, i) => (
-                <td style={{width: "30%"}} key={i}>
+                <td style={{width: "50%"}} key={i}>
                     <div style={{whiteSpace: "pre-wrap"}}>{d.name}</div>
                 </td>)
         },
         {
             title: (i: number) => (
-                <th style={{width: "30%"}} key={i}>
+                <th style={{width: "40%"}} key={i}>
                     <span>Artist</span>
                 </th>),
             render: (d: SpotifyApi.TrackObjectSimplified, i) => (
-                <td style={{width: "30%"}} key={i}>
+                <td style={{width: "40%"}} key={i}>
                     <ArtistsLinks artists={d.artists} />
                 </td>)
         },

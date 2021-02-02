@@ -3,15 +3,15 @@ import Playlist from "./Playlist";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../store/store";
-import {getPlaylist, toggleFromYourSavedTracksPlaylist} from "../../../store/playlist-reducer";
+import { getPlaylist, toggleFromYourSavedTracks } from '../../../store/tracklists-reducer';
 
 const PlaylistContainer = () => {
 
     let {id} = useParams<{ id: string }>()
 
     const dispatch = useDispatch()
-    const playlist = useSelector<AppRootStateType, SpotifyApi.SinglePlaylistResponse | null>(state => state.playlist.playlist)
-    const containsMySavedTracks = useSelector<AppRootStateType, boolean[]>(state => state.playlist.containsMySavedTracks)
+    const playlist = useSelector<AppRootStateType, SpotifyApi.SinglePlaylistResponse | null>(state => state.tracklists.playlist.body)
+    const containsMySavedTracks = useSelector<AppRootStateType, boolean[]>(state => state.tracklists.playlist.containsMySavedTracks)
 
     console.log("playlist page", playlist)
 
@@ -20,8 +20,8 @@ const PlaylistContainer = () => {
     }, [id, dispatch])
 
 
-    const toggleFromYourSavedTracks = useCallback((trackId: string, value: boolean, index: number) => {
-        dispatch(toggleFromYourSavedTracksPlaylist({trackId, value, index}))
+    const toggleFromYourSavedTracksHandler = useCallback((trackId: string, value: boolean, index: number) => {
+        dispatch(toggleFromYourSavedTracks({trackId, value, index, tracklistName: "playlist"}))
     }, [dispatch])
 
 
@@ -30,7 +30,7 @@ const PlaylistContainer = () => {
             {
                 (id === playlist?.id)
                     ? <Playlist playlist={playlist}
-                                toggleFromYourSavedTracks={toggleFromYourSavedTracks}
+                                toggleFromYourSavedTracks={toggleFromYourSavedTracksHandler}
                                 containsMySavedTracks={containsMySavedTracks}
                     />
                     : <div style={{color: "white"}}>Loading</div>

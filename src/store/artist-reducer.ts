@@ -1,33 +1,30 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {spotifyWebApi} from "../api/spotify-web-api";
 import {getArrContainInMySavedTracks} from "../helpers/helpers";
+import {getArtistPopularTracks, setArtistPopularTracks } from "./tracklists-reducer";
 
 const initialState = {
     artist: null as SpotifyApi.SingleArtistResponse | null,
-    popularTracks: [] as SpotifyApi.TrackObjectFull[],
     albums: [] as  SpotifyApi.AlbumObjectSimplified[],
     relatedArtists: [] as  SpotifyApi.ArtistObjectFull[],
     containsMySavedTracks: [] as boolean[]
 }
 
 export const getArtist = createAsyncThunk
-("getArtist", async ({id}: {id: string}, thunkAPI) => {
-    let [artist, popular, albums, relatedArtists] = await Promise
+("getArtist", async ({id}: {id: string}, {dispatch}) => {
+    let [artist, albums, relatedArtists] = await Promise
         .all([
             spotifyWebApi.getArtist(id),
-            spotifyWebApi.getArtistTopTracks(id, "RU"),
             spotifyWebApi.getArtistAlbums(id),
             spotifyWebApi.getArtistRelatedArtists(id)
         ])
 
-    let listId: string[] = popular.body.tracks.map(track => track.id)
+    await dispatch(getArtistPopularTracks({id}))
 
     return {
         artist: artist.body,
-        popularTracks: popular.body.tracks,
         albums: albums.body.items,
         relatedArtists: relatedArtists.body.artists,
-        containsMySavedTracks: await getArrContainInMySavedTracks(listId)
     }
 })
 
@@ -39,10 +36,8 @@ export const artistSlice = createSlice({
         builder
             .addCase(getArtist.fulfilled, (state, action) => {
                 state.artist = action.payload.artist
-                state.popularTracks = action.payload.popularTracks
                 state.albums = action.payload.albums
                 state.relatedArtists = action.payload.relatedArtists
-                state.containsMySavedTracks = action.payload.containsMySavedTracks
             })
     )
 })

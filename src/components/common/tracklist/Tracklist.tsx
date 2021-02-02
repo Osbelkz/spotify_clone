@@ -26,12 +26,19 @@ const Tracklist: React.FC<PropsType> = React.memo(({tracks, containsMySavedTrack
     const testModel: ITableModel[] = useMemo(() => ([
         {
             title: (i) => (
-                <th style={{width: "10%"}} key={i}>
-                    <span>preview</span>
-                </th>),
+                <th key={i}/>),
+            render: (d: SpotifyApi.SavedTrackObject, i) => (
+                <td style={{padding: "0 20px"}} key={i}>
+                    <PlayCurrentButton onClick={playTrack}
+                                       image={d.track.album.images[0].url}
+                                       trackId={d.track.id}/>
+                </td>)
+        },
+        {
+            title: (i) => (
+                <th key={i}/>),
             render: (d: SpotifyApi.SavedTrackObject, i, dataIndex, isSaved) => (
-                <td style={{width: "10%"}} key={i}>
-                    <PlayCurrentButton onClick={playTrack} image={d.track.album.images[0].url} trackId={d.track.id}/>
+                <td style={{padding: "0 20px 0 0"}} key={i}>
                     <LikeButton value={isSaved}
                                 trackId={d.track.id}
                                 dataIndex={dataIndex}
