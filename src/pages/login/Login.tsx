@@ -1,17 +1,11 @@
 import React from 'react';
 import classes from "./Login.module.scss";
-import {auth} from "../../api/api";
+import {loginUrl} from "../../api/api";
 
 const Login: React.FC = () => {
 
-    const loginRedirect = (e: any) => {
-        auth.auth()
-            .then((res) => {
-                window.open(res.headers["x-final-url"])
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+    const loginRedirect = () => {
+        window.location.href = loginUrl
     }
 
     return (

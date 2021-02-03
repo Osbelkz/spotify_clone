@@ -2,7 +2,7 @@ import axios from "axios";
 import {tokenDataType} from "../store/app-reducer";
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 const redirectUri = "http://localhost:3000/";
-const {REACT_APP_CLIENT_ID: clientId, REACT_APP_CLIENT_SECRET: client_secret} = process.env;
+const {REACT_APP_CLIENT_ID: clientId} = process.env;
 
 const scopes = [
     "user-read-currently-playing",
@@ -22,27 +22,14 @@ const scopes = [
 
 export const loginUrl = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
     "%20"
-)}&response_type=token&show_dialog=true`;
+)}&response_type=code&show_dialog=true`;
 
 export const auth = {
-    auth () {
-        return axios.get("https://cors-anywhere.herokuapp.com/https://accounts.spotify.com/authorize", {
-            params: {
-                client_id: clientId,
-                response_type: "token",
-                redirect_uri: redirectUri,
-                scope: scopes.join("%20"),
-                show_dialog: true
-            }
-        })
+    exchangeCode (code: string) {
+        return axios.post<tokenDataType>("https://spotify-token-ex.herokuapp.com/exchange", {code})
     },
-    exchangeToken (tokenData: tokenDataType) {
-        return axios.post("https://cors-anywhere.herokuapp.com/https://accounts.spotify.com/api/token", {
-            grant_type: "authorization_code",
-            access_token: tokenData.access_token,
-            token_type: tokenData.token_type,
-            client_id: clientId,
-            client_secret: client_secret,
-        })
+    refreshToken (refresh_token: string) {
+        return axios.post("https://spotify-token-ex.herokuapp.com/exchange", {refresh_token})
     }
+
 }

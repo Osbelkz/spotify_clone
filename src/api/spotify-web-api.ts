@@ -1,7 +1,3 @@
-// import SpotifyWebApi from "spotify-web-api-js"
-//
-// export const spotifyWebApi = new SpotifyWebApi();
-
 import SpotifyWebApi from "spotify-web-api-node"
 
 const redirectUri = "http://localhost:3000/";
