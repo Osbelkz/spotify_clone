@@ -18,7 +18,7 @@ const MyLibraryNav = () => {
         <div className={classes.myLibraryNav}>
             <div className={classes.title}>Your library</div>
             <ul className={classes.nav}>
-                {myLibraryItems.map((item, index) => <li key={item.to}>
+                {myLibraryItems.map((item, index) => <li key={index}>
                     <NavLink to={item.to} className={classes.link} activeClassName={classes.active}>{item.title}</NavLink>
                 </li>
                 )}

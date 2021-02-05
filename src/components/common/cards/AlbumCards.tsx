@@ -16,7 +16,7 @@ const AlbumCards:React.FC<PropsType> = React.memo(({cards, isLoading = false}) =
                     key={album.id}
                     name={album.name}
                     artists={album.artists}
-                    imageUrl={album.images[1].url}
+                    imageUrl={album.images[1]?.url ?? album.images[0]?.url}
                     albumId={album.id}/>
                     ))}
         </CardsWrapper>

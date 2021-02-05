@@ -12,12 +12,12 @@ const ArtistsLinks: React.FC<PropsType> = React.memo(({artists}) => {
     return (
         <>
             {artists.map((artist, index, arr) => (
-                <>
-                    <Link key={artist.id} className={classes.artistName}
+                <React.Fragment key={artist.id}>
+                    <Link className={classes.artistName}
                           to={{pathname: `/artist/${artist.id}`}}>{artist.name}
                     </Link>
                     {index !== arr.length - 1 ? ", ": ""}
-                </>
+                </React.Fragment>
             ))}
         </>
     );

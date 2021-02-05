@@ -1,11 +1,11 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import Table, {ITableModel} from "../../common/Table/Table";
+import Table, {ITableModel} from "../../common/table/Table";
 import {convertToMMSS} from "../../../helpers/helpers";
 import {getTrack} from "../../../store/player-reducer";
 import {useDispatch} from "react-redux";
 import {Button} from "../../common/button/Button";
 import classes from "./PopularTracks.module.scss";
-import PlayCurrentButton from "../../common/PlayCurrentButton/PlayCurrentButton";
+import PlayCurrentButton from "../../common/playCurrentButton/PlayCurrentButton";
 
 type PropsType = {
     tracks: SpotifyApi.TrackObjectFull[]
@@ -77,9 +77,12 @@ const PopularTracks: React.FC<PropsType> = React.memo(({tracks, containsMySavedT
                     contains={containsMySavedTracks}
                     data={toggle ? tracks : tracks?.slice(0, 5)}/>
             </div>
-            <Button onClick={toggleShowTracks}>
-                {toggle ? `Show 5 less` : `Show 5 more`}
-            </Button>
+            {tracks.length > 5
+                ? <Button onClick={toggleShowTracks}>
+                    {toggle ? `Show 5 less` : `Show 5 more`}
+                </Button>
+                : null
+            }
         </div>
     );
 });

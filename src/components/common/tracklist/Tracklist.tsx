@@ -1,12 +1,12 @@
 import React, {useCallback, useMemo} from 'react';
-import Table, {ITableModel} from "../Table/Table";
+import Table, {ITableModel} from "../table/Table";
 import {convertToMMSS} from "../../../helpers/helpers";
 import {useDispatch} from "react-redux";
 import {getTrack} from "../../../store/player-reducer";
 import ArtistsLinks from "../artistsLinks/ArtistsLinks";
 import {Link} from "react-router-dom";
 import LikeButton from "../likeButton/LikeButton";
-import PlayCurrentButton from "../PlayCurrentButton/PlayCurrentButton";
+import PlayCurrentButton from "../playCurrentButton/PlayCurrentButton";
 
 type PropsType = {
     tracks: Array<SpotifyApi.SavedTrackObject | SpotifyApi.PlayHistoryObject>

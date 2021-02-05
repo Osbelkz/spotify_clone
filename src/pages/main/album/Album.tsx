@@ -1,10 +1,10 @@
 import React, {useMemo} from 'react';
-import Table, {ITableModel} from "../../../components/common/Table/Table";
+import Table, {ITableModel} from "../../../components/common/table/Table";
 import {convertToMMSS} from "../../../helpers/helpers";
 import ArtistsLinks from "../../../components/common/artistsLinks/ArtistsLinks";
 import TracklistHeader from "../../../components/common/tracklist/TracklistHeader";
 import LikeButton from "../../../components/common/likeButton/LikeButton";
-import PlayCurrentButton from "../../../components/common/PlayCurrentButton/PlayCurrentButton";
+import PlayCurrentButton from "../../../components/common/playCurrentButton/PlayCurrentButton";
 
 
 type PropsType = {

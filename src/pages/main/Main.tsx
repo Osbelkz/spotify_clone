@@ -9,7 +9,7 @@ import HomeContainer from "./home/HomeContainer";
 
 const ArtistContainer = lazy(() => import('./artist/ArtistContainer'));
 const MyTopArtists = lazy(() => import('./yourLibrary/myTopArtists/MyTopArtists'));
-const LikedTracks = lazy(() => import('./yourLibrary/LikedTracks/LikedTracks'));
+const LikedTracks = lazy(() => import('./yourLibrary/likedTracks/LikedTracks'));
 const RecentlyPlayed = lazy(() => import('./yourLibrary/recentlyPlayed/RecentlyPlayed'));
 
 
