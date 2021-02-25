@@ -132,7 +132,8 @@ export const tracklistsSlice = createSlice({
                 state.artistPopularTracks.containsMySavedTracks = action.payload.containsMySavedTracks
             })
             .addCase(toggleFromYourSavedTracks.fulfilled, (state, action) => {
-                state[action.payload.tracklistName].containsMySavedTracks[action.payload.index] = !state[action.payload.tracklistName].containsMySavedTracks[action.payload.index]
+                const {index, tracklistName} = action.payload
+                state[tracklistName].containsMySavedTracks[index] = !state[tracklistName].containsMySavedTracks[index]
             })
     )
 })

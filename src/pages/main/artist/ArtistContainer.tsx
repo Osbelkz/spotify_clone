@@ -5,6 +5,7 @@ import {useParams} from "react-router-dom";
 import {AppRootStateType} from "../../../store/store";
 import {getArtist} from "../../../store/artist-reducer";
 import {getArrContainInMySavedTracks} from "../../../helpers/helpers";
+import Preloader from '../../../components/common/preloader/Preloader';
 
 const ArtistContainer = () => {
 
@@ -28,7 +29,7 @@ const ArtistContainer = () => {
         <>
             {
                 (id !== artist?.id)
-                    ? <div style={{color: "white"}}>Loading</div>
+                    ? <Preloader />
                     : <Artist artist={artist}
                               popularTracks={popularTracks}
                               albums={albums}

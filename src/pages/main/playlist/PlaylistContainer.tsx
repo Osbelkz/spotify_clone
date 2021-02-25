@@ -4,6 +4,7 @@ import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../store/store";
 import { getPlaylist, toggleFromYourSavedTracks } from '../../../store/tracklists-reducer';
+import Preloader from "../../../components/common/preloader/Preloader";
 
 const PlaylistContainer = () => {
 
@@ -33,7 +34,7 @@ const PlaylistContainer = () => {
                                 toggleFromYourSavedTracks={toggleFromYourSavedTracksHandler}
                                 containsMySavedTracks={containsMySavedTracks}
                     />
-                    : <div style={{color: "white"}}>Loading</div>
+                    : <Preloader />
             }
         </>
     );

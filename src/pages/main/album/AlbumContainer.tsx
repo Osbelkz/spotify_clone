@@ -6,6 +6,7 @@ import {getTrack, setPlayerQueue} from "../../../store/player-reducer";
 import Album from "./Album";
 import { getAlbum, toggleFromYourSavedTracks } from '../../../store/tracklists-reducer';
 import {spotifyWebApi} from "../../../api/spotify-web-api";
+import Preloader from "../../../components/common/preloader/Preloader";
 
 const AlbumContainer = () => {
 
@@ -47,7 +48,7 @@ const AlbumContainer = () => {
                              toggleFromYourSavedTracks={toggleFromYourSavedTracksHandler}
                              setPlayerQueueHandler={setPlayerQueueHandler}
                     />
-                    : <div style={{color: "white"}}>Loading</div>
+                    : <Preloader />
             }
         </>
     );

@@ -6,6 +6,8 @@ import {Route, Switch } from 'react-router-dom';
 import AlbumContainer from "./album/AlbumContainer";
 import PlaylistContainer from "./playlist/PlaylistContainer";
 import HomeContainer from "./home/HomeContainer";
+import BrowseContainer from './browse/BrowseContainer';
+import Preloader from "../../components/common/preloader/Preloader";
 
 const ArtistContainer = lazy(() => import('./artist/ArtistContainer'));
 const MyTopArtists = lazy(() => import('./yourLibrary/myTopArtists/MyTopArtists'));
@@ -26,9 +28,10 @@ const Main:React.FC = () => {
 
     return (
         <Layout>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Preloader/>}>
                 <Switch>
                     <Route path={"/"} exact component={HomeContainer}/>
+                    <Route path={"/browse"} exact component={BrowseContainer}/>
                     <Route path={"/album/:id"} component={AlbumContainer}/>
                     <Route path={"/playlist/:id"} component={PlaylistContainer}/>
                     <Route path={"/artist/:id"} component={ArtistContainer}/>
