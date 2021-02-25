@@ -10,10 +10,11 @@
     height: 20rem;
     border-radius: 50%;
     overflow: hidden;
+
     .artistImage {
       display: block;
-      max-width: 100%;
       transition: all 0.3s;
+      max-height: 20rem;
       &:hover {
         transform: scale(1.05);
       }

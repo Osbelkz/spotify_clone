@@ -4,7 +4,6 @@ import {spotifyWebApi} from "../api/spotify-web-api";
 const initialState = {
     currentTrack: null as SpotifyApi.SingleTrackResponse | null,
     queue: [] as string[],
-
 }
 
 export const getTrack = createAsyncThunk<SpotifyApi.SingleTrackResponse, { trackId: string }>
